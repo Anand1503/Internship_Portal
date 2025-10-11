@@ -1,4 +1,5 @@
-import apiClient, { setAuthToken } from './axiosClient';
+import axiosClient from "./axiosClient";
+import apiClient from "./client";
 
 // Types
 interface RegisterPayload {
@@ -7,46 +8,25 @@ interface RegisterPayload {
   password: string;
 }
 
-interface LoginPayload {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  access_token: string;
-  token_type: string;
-}
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
-
 // Register user
 export const register = (payload: RegisterPayload) => {
   return apiClient.post('/auth/register', payload);
 };
 
 // Login user
-export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
-  const response = await apiClient.post('/auth/token', new URLSearchParams(payload as unknown as Record<string, string>), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
-  const data = response.data;
-  // Store token in localStorage
-  localStorage.setItem('access_token', data.access_token);
-  // Set auth token in axios client
-  setAuthToken(data.access_token);
-  return data;
+export const login = async (email: string, password: string) => {
+  const res = await axiosClient.post("/auth/login", new URLSearchParams({
+    username: email,
+    password,
+  }));
+  const { access_token } = res.data;
+  localStorage.setItem("access_token", access_token);
+  return res.data;
 };
 
-// Get current user
-export const getMe = (): Promise<User> => {
-  return apiClient.get('/auth/me');
+export const getMe = async () => {
+  const res = await axiosClient.get("/auth/me");
+  return res.data;
 };
 
 // Usage:

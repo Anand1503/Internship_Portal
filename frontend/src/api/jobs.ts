@@ -38,13 +38,18 @@ export const createJob = async (payload: JobCreatePayload): Promise<Internship> 
 };
 
 export const listApplicants = async (jobId: number): Promise<ApplicantInfo[]> => {
-  const response = await axiosClient.get(`/hr/job/applicants?job_id=${jobId}`);
+  const response = await axiosClient.get(`/hr/job/${jobId}/applicants`);
   return response.data;
 };
 
 export const exportApplicants = async (jobId: number): Promise<Blob> => {
-  const response = await axiosClient.get(`/hr/job/export?job_id=${jobId}`, {
+  const response = await axiosClient.get(`/hr/export/${jobId}`, {
     responseType: 'blob',
   });
+  return response.data;
+};
+
+export const listMyJobs = async (): Promise<Internship[]> => {
+  const response = await axiosClient.get('/hr/my_jobs');
   return response.data;
 };

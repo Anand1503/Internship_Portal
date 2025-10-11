@@ -41,11 +41,11 @@ interface Application {
 }
 
 export const searchInternships = async (params: SearchParams): Promise<Internship[]> => {
-  const response = await axiosClient.get('/internships/search', { params });
+  const response = await axiosClient.get('/internships', { params });
   return response.data;
 };
 
 export const applyForInternship = async (payload: ApplyPayload): Promise<Application> => {
-  const response = await axiosClient.post('/internships/apply', payload);
+  const response = await axiosClient.post('/applications', payload);
   return response.data;
 };

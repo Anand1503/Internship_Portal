@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Text, Float, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from ..db.session import Base
+from .db.session import Base
 
 
 class User(Base):
@@ -17,7 +17,7 @@ class User(Base):
     # Relationships
     resumes = relationship("Resume", back_populates="user")
     applications = relationship("Application", back_populates="user")
-    internships = relationship("Internship", back_populates="posted_by")
+    internships = relationship("Internship", back_populates="posted_by_user")
 
 
 class Company(Base):
@@ -48,7 +48,7 @@ class Internship(Base):
 
     # Relationships
     company = relationship("Company", back_populates="internships")
-    posted_by = relationship("User", back_populates="internships")
+    posted_by_user = relationship("User", back_populates="internships")
     applications = relationship("Application", back_populates="internship")
 
 

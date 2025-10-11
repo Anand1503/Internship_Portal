@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
-import apiClient from '../api/client'
+import { getMe } from '../api/auth'
+import { setAuthToken } from '../api/axiosClient'
 
 // Set VITE_API_BASE in .env file in frontend directory, e.g., VITE_API_BASE=http://localhost:8000
 
 interface AuthContextType {
   user: any
-  login: (email: string, password: string) => Promise<void>
+  login: (token: string, user?: any) => Promise<void>
   logout: () => void
   isLoading: boolean
 }
@@ -30,25 +31,51 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      // Optionally validate token with backend
-      setUser({ token })
+    const initAuth = async () => {
+      const token = localStorage.getItem('access_token')
+      if (token) {
+        setAuthToken(token)
+        try {
+          const userData = await getMe()
+          setUser(userData)
+          localStorage.setItem('role', userData.role)
+        } catch (error) {
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('role')
+          setUser(null)
+          setAuthToken(null)
+        }
+      }
+      setIsLoading(false)
     }
-    setIsLoading(false)
+    initAuth()
   }, [])
 
-  const login = async (email: string, password: string) => {
-    // Expected token shape: { access_token: string }
-    const response = await apiClient.post('/auth/token', { email, password })
-    const { access_token } = response.data
-    localStorage.setItem('token', access_token)
-    setUser({ token: access_token })
+  const login = async (token: string, userData?: any) => {
+    localStorage.setItem('access_token', token)
+    setAuthToken(token)
+    if (userData) {
+      setUser(userData)
+      localStorage.setItem('role', userData.role)
+    } else {
+      try {
+        const fetchedUser = await getMe()
+        setUser(fetchedUser)
+        localStorage.setItem('role', fetchedUser.role)
+      } catch (error) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('role')
+        setUser(null)
+        setAuthToken(null)
+      }
+    }
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('role')
     setUser(null)
+    setAuthToken(null)
   }
 
   return (

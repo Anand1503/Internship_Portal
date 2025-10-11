@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, and_
-from app.db.session import get_db
-from app.models import Internship, Company, User, Application, Resume
-from app.utils.security import get_current_user
-from app.schemas import InternshipCreate, InternshipOut, ApplicationCreate, ApplicationOut
+from ..db.session import get_db
+from ..models import Internship, Company, User, Application, Resume
+from ..utils.security import get_current_user
+from ..schemas import InternshipCreate, InternshipOut, ApplicationCreate, ApplicationOut
 from typing import List, Optional
 
 router = APIRouter(prefix="/internships", tags=["internships"])
@@ -85,7 +85,7 @@ def get_internships(
             expected_qualifications=i.expected_qualifications,
             deadline=i.deadline,
             posted_at=i.posted_at,
-            posted_by_name=i.posted_by.name
+            posted_by_name=i.posted_by_user.name
         ))
     return result
 
@@ -106,5 +106,5 @@ def get_internship(id: int, db: Session = Depends(get_db)):
         expected_qualifications=internship.expected_qualifications,
         deadline=internship.deadline,
         posted_at=internship.posted_at,
-        posted_by_name=internship.posted_by.name
+        posted_by_name=internship.posted_by_user.name
     )

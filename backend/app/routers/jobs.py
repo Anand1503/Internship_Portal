@@ -6,11 +6,11 @@ import io
 from openpyxl import Workbook
 from openpyxl.styles import Font
 
-from app.db.session import get_db
-from app.models import Internship, Company, User, Application, Resume
-from app.utils.security import get_current_user
-from app.schemas import InternshipCreate, InternshipOut, ApplicationOut  # Reuse InternshipCreate for job creation
-from app.core.config import settings
+from ..db.session import get_db
+from ..models import Internship, Company, User, Application, Resume
+from ..utils.security import get_current_user
+from ..schemas import InternshipCreate, InternshipOut, ApplicationOut  # Reuse InternshipCreate for job creation
+from ..core.config import settings
 
 router = APIRouter(prefix="/hr/job", tags=["hr-jobs"])
 

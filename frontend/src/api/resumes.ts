@@ -1,10 +1,5 @@
 import axiosClient from './axiosClient';
 
-interface UploadPayload {
-  title: string;
-  file: File;
-}
-
 interface Resume {
   id: number;
   title: string;

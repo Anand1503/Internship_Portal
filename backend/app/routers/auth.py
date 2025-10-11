@@ -1,15 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.models import User
-from app.schemas import UserCreate, UserOut, Token
-from app.utils.security import (
+from ..db.session import get_db
+from ..models import User
+from ..schemas import UserCreate, UserOut, Token
+from ..utils.security import (
     get_password_hash,
     verify_password,
     create_access_token,
     get_current_user,
 )
+from ..core.config import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -19,7 +20,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     Register a new user.
 
     Accepts JSON: {name, email, password}
-    Hashes password and creates User row with default role "client".
+    Hashes password and creates User row with default role "student".
 
     Example curl:
     curl -X POST "http://localhost:8000/auth/register" \
@@ -37,14 +38,14 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         name=user.name,
         email=user.email,
         hashed_password=hashed_password,
-        role="client"  # Default role
+        role="student"  # Default role
     )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
 
-@router.post("/token", response_model=Token)
+@router.post("/login", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """
     Login user and return JWT token.
@@ -70,7 +71,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = create_access_token(
         data={"sub": str(user.id), "role": user.role}
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 @router.get("/me", response_model=UserOut)
 def read_users_me(current_user: User = Depends(get_current_user)):

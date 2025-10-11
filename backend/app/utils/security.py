@@ -5,20 +5,20 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from app.core.config import settings
-from app.db.session import get_db
-from app.models import User
+from ..core.config import settings
+from ..db.session import get_db
+from ..models import User
 
-# Password hashing context using bcrypt
+# Password hashing context using pbkdf2_sha256 (bcrypt has issues on Windows)
 # To change algorithm, modify schemes list (e.g., add 'argon2' if installed)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 # OAuth2 scheme for token extraction from Authorization header
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""
-    return pwd_context.hash(password)
+    return pwd_context.hash(password[:72])
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against its hash."""

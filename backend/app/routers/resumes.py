@@ -1,19 +1,19 @@
-from fastapi import APIRouter, Depends, Form, UploadFile, HTTPException
+from fastapi import APIRouter, Depends, Form, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.db.session import get_db
-from app.models import Resume, User
-from app.utils.security import get_current_user
-from app.utils.storage import save_resume_file
-from app.schemas import ResumeCreate, ResumeOut
+from ..db.session import get_db
+from ..models import Resume, User
+from ..utils.security import get_current_user
+from ..utils.storage import save_resume_file
+from ..schemas import ResumeCreate, ResumeOut
 
 router = APIRouter(prefix="/resumes", tags=["resumes"])
 
 @router.post("/", response_model=ResumeOut)
-def create_resume(
+async def create_resume(
     title: str = Form(...),
-    file: UploadFile = Depends(),
+    file: UploadFile = File(...),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -22,7 +22,7 @@ def create_resume(
         raise HTTPException(status_code=400, detail="Only PDF files are allowed")
 
     # Save the file
-    file_path = save_resume_file(file)
+    file_path = await save_resume_file(file)
 
     # Create resume record
     db_resume = Resume(

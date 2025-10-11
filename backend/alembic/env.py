@@ -1,26 +1,30 @@
 """Alembic environment script."""
 import os
+from dotenv import load_dotenv
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-
-from dotenv import load_dotenv
+from app.models import Base
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Set sqlalchemy.url from env
-os.environ['sqlalchemy.url'] = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set in .env")
 
 # Alembic Config object
 config = context.config
+
+# Set sqlalchemy.url from env with escaped % for configparser
+config.set_main_option("sqlalchemy.url", DATABASE_URL.replace('%', '%%'))
 
 # Interpret config file for Python logging
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import models to register tables with metadata
-from app.db.session import Base
+from app.db.session import engine
 from app.models import User, Company, Internship, Resume, Application
 
 target_metadata = Base.metadata

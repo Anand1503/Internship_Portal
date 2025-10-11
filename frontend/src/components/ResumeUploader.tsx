@@ -32,7 +32,7 @@ const ResumeUploader: React.FC = () => {
 
     setIsUploading(true)
     try {
-      const response = await apiClient.post('/resumes/', formData, {
+      await apiClient.post('/resumes/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

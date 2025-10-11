@@ -8,9 +8,35 @@ from fastapi.responses import StreamingResponse
 from ..db.session import get_db
 from ..models import Application, Internship, User, Resume, Company
 from ..utils.security import get_current_hr
-from ..schemas import ApplicationOut
+from ..schemas import ApplicationOut, InternshipOut
 
 router = APIRouter(prefix="/hr", tags=["hr"])
+
+@router.get("/my_jobs", response_model=List[InternshipOut])
+def get_my_jobs(
+    current_hr: User = Depends(get_current_hr),
+    db: Session = Depends(get_db)
+):
+    """
+    Get all jobs/internships posted by the current HR user.
+    """
+    internships = db.query(Internship).filter(Internship.posted_by == current_hr.id).all()
+    result = []
+    for i in internships:
+        result.append(InternshipOut(
+            id=i.id,
+            title=i.title,
+            company_name=i.company.name,
+            location=i.location,
+            stipend=i.stipend,
+            description=i.description,
+            min_qualifications=i.min_qualifications,
+            expected_qualifications=i.expected_qualifications,
+            deadline=i.deadline,
+            posted_at=i.posted_at,
+            posted_by_name=i.posted_by_user.name
+        ))
+    return result
 
 @router.get("/my_jobs/{hr_id}/applications", response_model=List[ApplicationOut])
 def get_hr_job_applications(
@@ -45,6 +71,34 @@ def get_hr_job_applications(
             status=a.status,
             applied_at=a.applied_at
         ))
+    return result
+
+@router.get("/job/{job_id}/applicants")
+def get_job_applicants(
+    job_id: int,
+    current_hr: User = Depends(get_current_hr),
+    db: Session = Depends(get_db)
+):
+    """
+    Get applicants for a specific job posted by the HR.
+    """
+    # Verify job belongs to HR
+    internship = db.query(Internship).filter(Internship.id == job_id, Internship.posted_by == current_hr.id).first()
+    if not internship:
+        raise HTTPException(status_code=404, detail="Job not found or not authorized")
+
+    # Get applications for this job
+    applications = db.query(Application).join(Resume).join(User, Application.user_id == User.id).filter(Application.internship_id == job_id).all()
+
+    result = []
+    for a in applications:
+        result.append({
+            'id': a.id,
+            'applicant_name': a.user.name,
+            'resume_path': a.resume.file_path,
+            'status': a.status,
+            'applied_at': a.applied_at
+        })
     return result
 
 @router.get("/export/{job_id}")
@@ -107,7 +161,7 @@ def post_hr_job(
     Post a new job/internship (wrapper for /internships/, HR only).
     """
     # Forward to internships router logic, but ensure HR role (already checked)
-    from ..routers.internships import create_internship
+    from .internships import create_internship
     # Note: This is a simplified forward; in practice, use shared service or include the router
     # For now, replicate the logic or call the function if possible
     # Assuming we can import and call
