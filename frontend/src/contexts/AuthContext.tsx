@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { getMe } from '../api/auth'
+import { api } from '../api/client'
 
 interface AuthContextType {
   user: any
@@ -28,8 +28,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('access_token')
     if (token) {
-      getMe()
-        .then(setUser)
+      api.auth.getMe()
+        .then(response => setUser(response.data))
         .catch(() => {
           localStorage.removeItem('access_token')
           setUser(null)

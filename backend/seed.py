@@ -1,11 +1,15 @@
 from dotenv import load_dotenv
 import os
 from datetime import datetime, timedelta
-load_dotenv('backend/.env')
+load_dotenv('.env')
 
-from app.db.session import SessionLocal
-from app.models import User, Company, Internship, Application, Resume
-from app.utils.security import get_password_hash
+from app.database import SessionLocal
+from app.models.user import User
+from app.models.company import Company
+from app.models.internship import Internship
+from app.models.application import Application
+from app.models.resume import Resume
+from app.utils.hashing import get_password_hash
 
 def seed_data():
     db = SessionLocal()

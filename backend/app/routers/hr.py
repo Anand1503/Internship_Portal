@@ -1,16 +1,25 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from io import BytesIO
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from fastapi.responses import StreamingResponse
-from ..db.session import get_db
-from ..models import Application, Internship, User, Resume, Company
-from ..utils.security import get_current_hr
-from ..schemas import ApplicationOut, InternshipOut
+from pydantic import BaseModel
+from ..database import get_db
+from ..models.application import Application
+from ..models.internship import Internship
+from ..models.user import User
+from ..models.resume import Resume
+from ..models.company import Company
+from ..dependencies import get_current_hr_user as get_current_hr
+from ..schemas.application import ApplicationOut
+from ..schemas.internship import InternshipOut
 
-router = APIRouter(prefix="/hr", tags=["hr"])
+class ApplicationStatusUpdate(BaseModel):
+    status: str  # 'pending', 'accepted', 'rejected'
+
+router = APIRouter()
 
 @router.get("/my_jobs", response_model=List[InternshipOut])
 def get_my_jobs(
@@ -73,15 +82,8 @@ def get_hr_job_applications(
         ))
     return result
 
-@router.get("/job/{job_id}/applicants")
-def get_job_applicants(
-    job_id: int,
-    current_hr: User = Depends(get_current_hr),
-    db: Session = Depends(get_db)
-):
-    """
-    Get applicants for a specific job posted by the HR.
-    """
+def _get_job_applicants_logic(job_id: int, current_hr: User, db: Session):
+    """Shared logic for getting job applicants"""
     # Verify job belongs to HR
     internship = db.query(Internship).filter(Internship.id == job_id, Internship.posted_by == current_hr.id).first()
     if not internship:
@@ -95,11 +97,67 @@ def get_job_applicants(
         result.append({
             'id': a.id,
             'applicant_name': a.user.name,
+            'resume_id': a.resume.id,
+            'resume_title': a.resume.title,
             'resume_path': a.resume.file_path,
             'status': a.status,
             'applied_at': a.applied_at
         })
     return result
+
+@router.get("/job/{job_id}/applicants")
+def get_job_applicants(
+    job_id: int,
+    current_hr: User = Depends(get_current_hr),
+    db: Session = Depends(get_db)
+):
+    """Get applicants for a specific job posted by the HR."""
+    return _get_job_applicants_logic(job_id, current_hr, db)
+
+@router.get("/applications/{job_id}")
+def get_applications_for_job(
+    job_id: int,
+    current_hr: User = Depends(get_current_hr),
+    db: Session = Depends(get_db)
+):
+    """Alias endpoint for frontend compatibility"""
+    return _get_job_applicants_logic(job_id, current_hr, db)
+
+@router.put("/applications/{application_id}/status")
+def update_application_status(
+    application_id: int,
+    status_update: ApplicationStatusUpdate,
+    current_hr: User = Depends(get_current_hr),
+    db: Session = Depends(get_db)
+):
+    """
+    Update the status of an application.
+    HR can only update applications for their own job postings.
+    """
+    # Get the application
+    application = db.query(Application).filter(Application.id == application_id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+    
+    # Verify the internship belongs to the HR user
+    internship = db.query(Internship).filter(
+        Internship.id == application.internship_id,
+        Internship.posted_by == current_hr.id
+    ).first()
+    if not internship:
+        raise HTTPException(status_code=403, detail="Not authorized to update this application")
+    
+    # Validate status
+    valid_statuses = ['pending', 'accepted', 'rejected']
+    if status_update.status not in valid_statuses:
+        raise HTTPException(status_code=400, detail=f"Invalid status. Must be one of: {', '.join(valid_statuses)}")
+    
+    # Update status
+    application.status = status_update.status
+    db.commit()
+    db.refresh(application)
+    
+    return {"message": "Application status updated successfully", "status": application.status}
 
 @router.get("/export/{job_id}")
 def export_job_applications(

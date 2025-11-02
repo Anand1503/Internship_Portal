@@ -1,13 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, and_
-from ..db.session import get_db
-from ..models import Internship, Company, User, Application, Resume
-from ..utils.security import get_current_user
-from ..schemas import InternshipCreate, InternshipOut, ApplicationCreate, ApplicationOut
+from ..database import get_db
+from ..models.internship import Internship
+from ..models.company import Company
+from ..models.user import User
+from ..models.application import Application
+from ..models.resume import Resume
+from ..dependencies import get_current_user
+from ..schemas.internship import InternshipCreate, InternshipOut
+from ..schemas.application import ApplicationCreate, ApplicationOut
 from typing import List, Optional
 
-router = APIRouter(prefix="/internships", tags=["internships"])
+router = APIRouter()
 
 @router.post("/", response_model=InternshipOut)
 def create_internship(

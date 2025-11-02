@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { getMe } from '../api/auth'
+import { api } from '../api/client'
 import { setAuthToken } from '../api/axiosClient'
 
 // Set VITE_API_BASE in .env file in frontend directory, e.g., VITE_API_BASE=http://localhost:8000
@@ -36,7 +36,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (token) {
         setAuthToken(token)
         try {
-          const userData = await getMe()
+          const response = await api.auth.getMe()
+          const userData = response.data
           setUser(userData)
           localStorage.setItem('role', userData.role)
         } catch (error) {
@@ -59,7 +60,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('role', userData.role)
     } else {
       try {
-        const fetchedUser = await getMe()
+        const response = await api.auth.getMe()
+        const fetchedUser = response.data
         setUser(fetchedUser)
         localStorage.setItem('role', fetchedUser.role)
       } catch (error) {

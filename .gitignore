@@ -162,3 +162,26 @@ htmlcov/
 *.swp
 *.swo
 *~
+
+# Uploaded files
+backend/resumes/
+backend/uploads/
+
+# Migration and test scripts (not needed in repo)
+migrate-db.ps1
+migrate-now.ps1
+test-login.ps1
+backup.sql
+backup.dump
+
+# Documentation files (except README.md)
+DOCKER-SETUP.md
+DOCKER-DEPLOYMENT-SUCCESS.md
+DOCKER-FILES-SUMMARY.md
+DOCKER-CHECKLIST.md
+QUICK-DB-MIGRATION.md
+MIGRATION-SUCCESS.md
+migrate-db-to-docker.md
+
+# Init DB scripts (migrations handle schema)
+init-db/

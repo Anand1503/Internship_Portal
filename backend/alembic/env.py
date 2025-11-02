@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-from app.models import Base
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,8 +23,12 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import models to register tables with metadata
-from app.db.session import engine
-from app.models import User, Company, Internship, Resume, Application
+from app.database import engine, Base
+from app.models.user import User
+from app.models.company import Company
+from app.models.internship import Internship
+from app.models.resume import Resume
+from app.models.application import Application
 
 target_metadata = Base.metadata
 

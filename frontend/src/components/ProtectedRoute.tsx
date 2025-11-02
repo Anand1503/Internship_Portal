@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMe } from '../api/auth';
+import { api } from '../api/client';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -19,7 +19,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
         return;
       }
       try {
-        const userData = await getMe();
+        const response = await api.auth.getMe();
+        const userData = response.data;
         if (!allowedRoles.includes(userData.role)) {
           if (userData.role === 'student') {
             navigate('/dashboard');

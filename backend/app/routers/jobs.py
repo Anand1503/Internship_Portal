@@ -1,18 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import List
 import io
 from openpyxl import Workbook
 from openpyxl.styles import Font
 
-from ..db.session import get_db
-from ..models import Internship, Company, User, Application, Resume
-from ..utils.security import get_current_user
-from ..schemas import InternshipCreate, InternshipOut, ApplicationOut  # Reuse InternshipCreate for job creation
+from ..database import get_db
+from ..models.internship import Internship
+from ..models.company import Company
+from ..models.user import User
+from ..models.application import Application
+from ..models.resume import Resume
+from ..dependencies import get_current_user
+from ..schemas.internship import InternshipCreate, InternshipOut
+from ..schemas.application import ApplicationOut
 from ..core.config import settings
 
-router = APIRouter(prefix="/hr/job", tags=["hr-jobs"])
+router = APIRouter()
 
 def require_hr_role(current_user: User = Depends(get_current_user)):
     """Dependency to ensure user is HR"""

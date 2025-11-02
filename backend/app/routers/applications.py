@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ..db.session import get_db
-from ..models import Application, Internship, Resume, Company, User
-from ..utils.security import get_current_user
-from ..schemas import ApplicationCreate, ApplicationOut
+from ..database import get_db
+from ..models.application import Application
+from ..models.internship import Internship
+from ..models.resume import Resume
+from ..models.company import Company
+from ..models.user import User
+from ..dependencies import get_current_user
+from ..schemas.application import ApplicationCreate, ApplicationOut
 from typing import List
 
-router = APIRouter(prefix="/applications", tags=["applications"])
+router = APIRouter()
 
 @router.post("/", response_model=ApplicationOut)
 def create_application(
@@ -47,7 +51,7 @@ def create_application(
         id=db_application.id,
         internship_id=internship.id,
         internship_title=internship.title,
-        internship_company=internship.company.name,
+        company_name=internship.company.name,
         resume_id=resume.id,
         resume_title=resume.title,
         cover_letter=db_application.cover_letter,
@@ -64,7 +68,7 @@ def get_my_applications(current_user: User = Depends(get_current_user), db: Sess
             id=a.id,
             internship_id=a.internship.id,
             internship_title=a.internship.title,
-            internship_company=a.internship.company.name,
+            company_name=a.internship.company.name,
             resume_id=a.resume.id,
             resume_title=a.resume.title,
             cover_letter=a.cover_letter,
