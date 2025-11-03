@@ -113,8 +113,8 @@ const UploadResume: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume Management</h1>
-        <p className="text-gray-600">Upload and manage your resumes for internship applications</p>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Resume Management</h1>
+        <p className="text-dim-300">Upload and manage your resumes for internship applications</p>
       </div>
 
       {/* Upload Section */}

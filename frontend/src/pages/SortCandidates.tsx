@@ -161,8 +161,8 @@ const SortCandidates: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Sort Candidates</h1>
-        <p className="text-gray-600">Review and manage applications for your job postings</p>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Sort Candidates</h1>
+        <p className="text-dim-300">Review and manage applications for your job postings</p>
       </div>
 
       {/* Job Selection */}

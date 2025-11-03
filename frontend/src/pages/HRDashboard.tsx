@@ -117,8 +117,8 @@ const HRDashboard: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">HR Dashboard</h1>
-        <p className="text-gray-600">Manage your job postings and track applicant performance</p>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">HR Dashboard</h1>
+        <p className="text-dim-300">Manage your job postings and track applicant performance</p>
       </div>
 
       {/* Statistics Cards */}
