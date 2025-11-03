@@ -121,7 +121,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Student Dashboard</h1>
@@ -130,7 +130,7 @@ const Dashboard: React.FC = () => {
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Applications</p>
@@ -142,7 +142,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Pending</p>
@@ -154,7 +154,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Accepted</p>
@@ -166,7 +166,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Rejected</p>
@@ -182,7 +182,7 @@ const Dashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Status Distribution Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Application Status</h3>
           {totalApplications > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -212,7 +212,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Applications by Company Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Applications by Company</h3>
           {companyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -233,7 +233,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Applications Table */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
         <div className="p-6 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900">My Applications</h3>
         </div>

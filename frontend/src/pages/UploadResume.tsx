@@ -110,7 +110,7 @@ const UploadResume: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume Management</h1>
@@ -118,7 +118,7 @@ const UploadResume: React.FC = () => {
       </div>
 
       {/* Upload Section */}
-      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Upload New Resume</h2>
         
         {uploadError && (
@@ -208,7 +208,7 @@ const UploadResume: React.FC = () => {
       </div>
 
       {/* Existing Resumes */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">My Resumes</h2>
         </div>

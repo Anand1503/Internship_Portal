@@ -53,7 +53,7 @@ const PostJob: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Post New Internship</h1>
@@ -61,7 +61,7 @@ const PostJob: React.FC = () => {
       </div>
 
       {/* Form */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-200">
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Information */}
           <div>

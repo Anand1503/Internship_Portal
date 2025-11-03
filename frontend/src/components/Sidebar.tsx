@@ -117,15 +117,15 @@ const Sidebar: React.FC = () => {
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 z-50 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out
+        fixed top-0 left-0 z-50 h-full bg-gradient-to-b from-white to-gray-50 border-r border-gray-200 shadow-lg transition-all duration-300 ease-in-out
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:relative lg:z-auto
       `}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
           {!isCollapsed && (
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
               Internship Portal
             </h1>
           )}
@@ -149,10 +149,10 @@ const Sidebar: React.FC = () => {
                 to={item.href}
                 onClick={() => setIsMobileOpen(false)}
                 className={`
-                  flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors duration-200
+                  flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
                   ${isActive(item.href) 
-                    ? 'bg-primary-50 text-primary-600 border-l-4 border-primary-600' 
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md' 
+                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-700'
                   }
                   ${isCollapsed ? 'justify-center' : ''}
                 `}
@@ -171,8 +171,8 @@ const Sidebar: React.FC = () => {
           <button
             onClick={handleLogout}
             className={`
-              flex items-center space-x-3 w-full px-3 py-2 rounded-lg text-red-600 
-              hover:bg-red-50 transition-colors duration-200
+              flex items-center space-x-3 w-full px-3 py-3 rounded-xl text-red-600 
+              hover:bg-red-50 transition-all duration-200 hover:shadow-sm
               ${isCollapsed ? 'justify-center' : ''}
             `}
           >

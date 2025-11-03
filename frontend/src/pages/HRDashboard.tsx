@@ -114,7 +114,7 @@ const HRDashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">HR Dashboard</h1>
@@ -123,7 +123,7 @@ const HRDashboard: React.FC = () => {
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Job Postings</p>
@@ -135,7 +135,7 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Active Jobs</p>
@@ -147,7 +147,7 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Applications</p>
@@ -159,7 +159,7 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Avg Applications/Job</p>
@@ -175,7 +175,7 @@ const HRDashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Applications per Job Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Applications per Job Posting</h3>
           {jobs.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -195,7 +195,7 @@ const HRDashboard: React.FC = () => {
         </div>
 
         {/* Jobs by Location Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Jobs by Location</h3>
           {locationData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -226,7 +226,7 @@ const HRDashboard: React.FC = () => {
       </div>
 
       {/* Job Postings Table */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
         <div className="p-6 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900">Your Job Postings</h3>
         </div>

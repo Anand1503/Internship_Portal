@@ -86,7 +86,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
@@ -94,7 +94,7 @@ const Profile: React.FC = () => {
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-200 overflow-hidden">
         {/* Header with Avatar */}
         <div className="bg-gradient-to-r from-primary-500 to-primary-600 px-8 py-12">
           <div className="flex items-center space-x-6">
@@ -206,7 +206,7 @@ const Profile: React.FC = () => {
 
       {/* Statistics Card (Role-specific) */}
       {profile.role === 'student' && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -226,7 +226,7 @@ const Profile: React.FC = () => {
       )}
 
       {profile.role === 'hr' && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-purple-50 rounded-lg">

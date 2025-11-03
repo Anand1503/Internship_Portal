@@ -158,7 +158,7 @@ const SortCandidates: React.FC = () => {
   const selectedJobData = jobs.find(job => job.id === selectedJob);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Sort Candidates</h1>
@@ -166,7 +166,7 @@ const SortCandidates: React.FC = () => {
       </div>
 
       {/* Job Selection */}
-      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
         <div className="flex items-center mb-4">
           <Briefcase className="w-5 h-5 mr-2 text-primary-600" />
           <h3 className="text-lg font-semibold text-gray-900">Select Job Posting</h3>
@@ -204,7 +204,7 @@ const SortCandidates: React.FC = () => {
 
       {/* Selected Job Info and Export */}
       {selectedJob && selectedJobData && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+        <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <div>
