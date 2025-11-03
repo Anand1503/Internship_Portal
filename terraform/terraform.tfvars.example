@@ -1,0 +1,44 @@
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to git (it contains secrets)
+
+# Azure Subscription
+subscription_id = "64da7b80-1969-401c-9719-09abc1e5b3c9"
+
+# Resource Configuration
+location            = "centralindia"
+resource_group_name = "internship-portal-production-rg"
+project_name        = "internship-portal"
+
+# Container Registry
+acr_name = "internshipportal"
+
+# PostgreSQL Configuration
+postgres_server_name     = "internship-portal-db"
+postgres_admin_username  = "psqladmin"
+postgres_admin_password  = "AzurePostgres@25"  # Change this!
+postgres_database_name   = "postgres"
+
+# Network Configuration (optional)
+allow_local_ip  = false
+local_ip_address = ""  # Your IP address if allow_local_ip = true
+
+# Container Apps
+container_env_name  = "internship-portal-env"
+backend_app_name    = "internship-portal-backend"
+frontend_app_name   = "internship-portal-frontend"
+
+# Backend Configuration
+backend_secret_key = "your-secret-key-here"  # Generate using: openssl rand -hex 32
+
+# Scaling Configuration
+backend_min_replicas  = 1
+backend_max_replicas  = 3
+frontend_min_replicas = 1
+frontend_max_replicas = 3
+
+# Tags
+tags = {
+  Environment = "Production"
+  Project     = "Internship Portal"
+  ManagedBy   = "Terraform"
+}
