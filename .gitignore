@@ -185,3 +185,41 @@ migrate-db-to-docker.md
 
 # Init DB scripts (migrations handle schema)
 init-db/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+terraform/terraform.tfvars
+terraform/tfplan
+terraform/crash.log
+terraform/override.tf
+terraform/override.tf.json
+terraform/*_override.tf
+terraform/*_override.tf.json
+
+# Security and sensitive files
+azure-credentials.json
+azure-setup-summary.txt
+new-secrets-*.txt
+fix-security-issue.ps1
+generate-secrets.ps1
+SECURITY-FIX-GUIDE.md
+github-secrets.txt
+
+# PowerShell deployment scripts
+*.ps1
+!.github/**/*.ps1
+
+# Python migration scripts (not part of application)
+migrate_database.py
+check_dependencies.py
+test_login.py
+
+# SQL backup files
+*.sql
+*.dump
+
+# Cleanup script
+cleanup-for-github.ps1

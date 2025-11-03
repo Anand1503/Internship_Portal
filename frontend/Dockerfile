@@ -3,6 +3,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Accept build argument for API URL
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 # Install dependencies
 COPY package*.json ./
 RUN npm ci
@@ -10,7 +14,7 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build the application
+# Build the application with environment variable
 RUN npm run build
 
 # === Stage 2: Serve the Built Application with Nginx ===
@@ -23,7 +27,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Set environment variables for nginx
-ENV NGINX_PORT=80
+ENV NGINX_PORT=8080
 ENV NGINX_HOST=0.0.0.0
 
 # Create a non-root user and set permissions
@@ -37,7 +41,7 @@ RUN adduser -D -u 1001 nginxuser && \
 USER nginxuser
 
 # Expose the port nginx is running on
-EXPOSE 80
+EXPOSE 8080
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

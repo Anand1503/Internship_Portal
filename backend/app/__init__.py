@@ -10,8 +10,17 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json" ) 
     # CORS - Must be added before routes 
 app.add_middleware( 
-    CORSMiddleware, allow_origins=["*"], # Allow all origins for development 
-    allow_credentials=True, allow_methods=["*"], allow_headers=["*"], expose_headers=["*"] ) 
+    CORSMiddleware, 
+    allow_origins=[
+        "http://localhost:5173",  # Local development
+        "http://localhost:3000",  # Alternative local port
+        "https://internship-portal-frontend.orangeglacier-54f3babc.centralindia.azurecontainerapps.io"  # Azure frontend
+    ],
+    allow_credentials=True, 
+    allow_methods=["*"], 
+    allow_headers=["*"], 
+    expose_headers=["*"] 
+) 
 # Create database tables automatically 
 Base.metadata.create_all(bind=engine) 
 @app.get("/") 

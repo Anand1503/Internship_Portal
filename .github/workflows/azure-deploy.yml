@@ -1,0 +1,209 @@
+# GitHub Actions CI/CD Pipeline for Azure Deployment
+
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+  pull_request:
+    branches:
+      - main
+
+env:
+  AZURE_RESOURCE_GROUP: internship-portal-production-rg
+  ACR_NAME: internshipportalacr
+  BACKEND_APP_NAME: internship-portal-backend
+  FRONTEND_APP_NAME: internship-portal-frontend
+
+jobs:
+  # Job 1: Build and Push Docker Images
+  build:
+    name: Build and Push Images
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push Backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.ACR_NAME }}.azurecr.io/backend:${{ github.sha }}
+            ${{ env.ACR_NAME }}.azurecr.io/backend:latest
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          build-args: |
+            VITE_API_BASE_URL=${{ secrets.BACKEND_URL }}/api/v1
+          tags: |
+            ${{ env.ACR_NAME }}.azurecr.io/frontend:${{ github.sha }}
+            ${{ env.ACR_NAME }}.azurecr.io/frontend:latest
+
+  # Job 2: Deploy Infrastructure with Terraform
+  terraform:
+    name: Deploy Infrastructure
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=${{ secrets.TERRAFORM_STATE_RG }}" \
+            -backend-config="storage_account_name=${{ secrets.TERRAFORM_STORAGE_ACCOUNT }}" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=internship-portal.tfstate"
+
+      - name: Terraform Plan
+        run: |
+          terraform plan \
+            -var="db_password=${{ secrets.DB_PASSWORD }}" \
+            -var="secret_key=${{ secrets.SECRET_KEY }}" \
+            -out=tfplan
+
+      - name: Terraform Apply
+        if: github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+
+      - name: Get Terraform Outputs
+        id: terraform-outputs
+        run: |
+          echo "backend_url=$(terraform output -raw backend_url)" >> $GITHUB_OUTPUT
+          echo "frontend_url=$(terraform output -raw frontend_url)" >> $GITHUB_OUTPUT
+
+    outputs:
+      backend_url: ${{ steps.terraform-outputs.outputs.backend_url }}
+      frontend_url: ${{ steps.terraform-outputs.outputs.frontend_url }}
+
+  # Job 3: Deploy to Azure Container Apps
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: terraform
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Backend Container App
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az containerapp update \
+              --name ${{ env.BACKEND_APP_NAME }} \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --image ${{ env.ACR_NAME }}.azurecr.io/backend:${{ github.sha }} \
+              --set-env-vars \
+                DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+                SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+                ALGORITHM="HS256" \
+                ACCESS_TOKEN_EXPIRE_MINUTES="30" \
+                FRONTEND_URL="${{ needs.terraform.outputs.frontend_url }}" \
+                ENVIRONMENT="production"
+
+      - name: Deploy Frontend Container App
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az containerapp update \
+              --name ${{ env.FRONTEND_APP_NAME }} \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --image ${{ env.ACR_NAME }}.azurecr.io/frontend:${{ github.sha }} \
+              --set-env-vars \
+                VITE_API_BASE_URL="${{ needs.terraform.outputs.backend_url }}/api/v1"
+
+  # Job 4: Run Database Migrations
+  migrations:
+    name: Run Database Migrations
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Run Alembic Migrations
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az containerapp exec \
+              --name ${{ env.BACKEND_APP_NAME }} \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --command "alembic upgrade head"
+
+  # Job 5: Health Check
+  health-check:
+    name: Verify Deployment
+    runs-on: ubuntu-latest
+    needs: [terraform, migrations]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Check Backend Health
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ needs.terraform.outputs.backend_url }}/api/v1/health)
+          if [ $response -ne 200 ]; then
+            echo "Backend health check failed with status $response"
+            exit 1
+          fi
+          echo "Backend is healthy"
+
+      - name: Check Frontend Health
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ needs.terraform.outputs.frontend_url }})
+          if [ $response -ne 200 ]; then
+            echo "Frontend health check failed with status $response"
+            exit 1
+          fi
+          echo "Frontend is healthy"
+
+      - name: Deployment Success Notification
+        if: success()
+        run: |
+          echo "🎉 Deployment successful!"
+          echo "Frontend URL: ${{ needs.terraform.outputs.frontend_url }}"
+          echo "Backend URL: ${{ needs.terraform.outputs.backend_url }}"
