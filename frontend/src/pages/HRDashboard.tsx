@@ -178,7 +178,7 @@ const HRDashboard: React.FC = () => {
         <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Applications per Job Posting</h3>
           {jobs.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <BarChart data={applicationsPerJob}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -198,7 +198,7 @@ const HRDashboard: React.FC = () => {
         <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Jobs by Location</h3>
           {locationData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <PieChart>
                 <Pie
                   data={locationData}
