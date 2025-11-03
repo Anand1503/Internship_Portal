@@ -96,14 +96,14 @@ const Profile: React.FC = () => {
       {/* Profile Card */}
       <div className="bg-white rounded-xl shadow-soft border border-gray-200 overflow-hidden">
         {/* Header with Avatar */}
-        <div className="bg-gradient-to-r from-primary-500 to-primary-600 px-8 py-12">
-          <div className="flex items-center space-x-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <User className="w-12 h-12 text-primary-600" />
+        <div className="bg-gradient-to-r from-primary-500 to-primary-600 px-4 sm:px-8 py-8 sm:py-12">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+              <User className="w-10 h-10 sm:w-12 sm:h-12 text-primary-600" />
             </div>
-            <div className="flex-1">
-              <h2 className="text-3xl font-bold text-white mb-2">{profile.name}</h2>
-              <div className="flex items-center space-x-3">
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{profile.name}</h2>
+              <div className="flex items-center justify-center sm:justify-start space-x-3">
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${getRoleBadgeColor(profile.role)}`}>
                   {profile.role === 'hr' ? 'HR Manager' : 'Student'}
                 </span>
@@ -112,20 +112,21 @@ const Profile: React.FC = () => {
             {!editing && (
               <button
                 onClick={() => setEditing(true)}
-                className="px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-2"
+                className="px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-2 w-full sm:w-auto justify-center sm:justify-start"
               >
                 <Edit2 className="w-4 h-4" />
-                <span>Edit Profile</span>
+                <span className="hidden sm:inline">Edit Profile</span>
+                <span className="sm:hidden">Edit</span>
               </button>
             )}
           </div>
         </div>
 
         {/* Profile Details */}
-        <div className="p-8 space-y-6">
+        <div className="p-4 sm:p-8 space-y-6">
           {/* Name */}
-          <div className="flex items-start space-x-4">
-            <div className="p-3 bg-primary-100 rounded-lg">
+          <div className="flex items-start space-x-3 sm:space-x-4">
+            <div className="p-2 sm:p-3 bg-primary-100 rounded-lg flex-shrink-0">
               <User className="w-5 h-5 text-primary-600" />
             </div>
             <div className="flex-1">
@@ -144,8 +145,8 @@ const Profile: React.FC = () => {
           </div>
 
           {/* Email */}
-          <div className="flex items-start space-x-4">
-            <div className="p-3 bg-green-100 rounded-lg">
+          <div className="flex items-start space-x-3 sm:space-x-4">
+            <div className="p-2 sm:p-3 bg-green-100 rounded-lg flex-shrink-0">
               <Mail className="w-5 h-5 text-green-600" />
             </div>
             <div className="flex-1">
@@ -156,8 +157,8 @@ const Profile: React.FC = () => {
           </div>
 
           {/* Role */}
-          <div className="flex items-start space-x-4">
-            <div className="p-3 bg-purple-100 rounded-lg">
+          <div className="flex items-start space-x-3 sm:space-x-4">
+            <div className="p-2 sm:p-3 bg-purple-100 rounded-lg flex-shrink-0">
               <Briefcase className="w-5 h-5 text-purple-600" />
             </div>
             <div className="flex-1">
@@ -172,8 +173,8 @@ const Profile: React.FC = () => {
           </div>
 
           {/* Member Since */}
-          <div className="flex items-start space-x-4">
-            <div className="p-3 bg-yellow-100 rounded-lg">
+          <div className="flex items-start space-x-3 sm:space-x-4">
+            <div className="p-2 sm:p-3 bg-yellow-100 rounded-lg flex-shrink-0">
               <Calendar className="w-5 h-5 text-yellow-600" />
             </div>
             <div className="flex-1">
@@ -206,7 +207,7 @@ const Profile: React.FC = () => {
 
       {/* Statistics Card (Role-specific) */}
       {profile.role === 'student' && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -226,7 +227,7 @@ const Profile: React.FC = () => {
       )}
 
       {profile.role === 'hr' && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-soft border border-gray-200 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-purple-50 rounded-lg">
