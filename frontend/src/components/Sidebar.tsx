@@ -49,13 +49,6 @@ const Sidebar: React.FC = () => {
       icon: Upload,
       href: '/upload-resume',
       roles: ['student']
-    },
-    {
-      id: 'profile',
-      label: 'Profile',
-      icon: User,
-      href: '/profile',
-      roles: ['student']
     }
   ];
 
@@ -79,13 +72,6 @@ const Sidebar: React.FC = () => {
       label: 'Sort Candidates',
       icon: Users,
       href: '/sort-candidates',
-      roles: ['hr']
-    },
-    {
-      id: 'profile',
-      label: 'Profile',
-      icon: User,
-      href: '/profile',
       roles: ['hr']
     }
   ];
@@ -183,8 +169,26 @@ const Sidebar: React.FC = () => {
           })}
         </nav>
 
-        {/* Footer with logout */}
-        <div className="p-4 border-t border-dim-700">
+        {/* Footer with Profile and Logout */}
+        <div className="p-4 border-t border-dim-700 space-y-2">
+          <Link
+            to="/profile"
+            onClick={() => setIsMobileOpen(false)}
+            className={`
+              flex items-center space-x-3 w-full px-3 py-3 rounded-xl transition-all duration-200
+              ${isActive('/profile') 
+                ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-md' 
+                : 'text-dim-300 hover:bg-rose-900 hover:text-rose-300'
+              }
+              ${isCollapsed ? 'justify-center' : ''}
+            `}
+          >
+            <User className="w-5 h-5 flex-shrink-0" />
+            {!isCollapsed && (
+              <span className="font-medium">Profile</span>
+            )}
+          </Link>
+          
           <button
             onClick={handleLogout}
             className={`
