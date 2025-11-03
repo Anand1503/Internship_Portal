@@ -4,10 +4,7 @@ import {
   Building2, 
   FileText, 
   Target, 
-  ArrowRight,
-  UserPlus,
-  Search,
-  Handshake
+  ArrowRight
 } from 'lucide-react';
 
 const LandingPage = () => {
