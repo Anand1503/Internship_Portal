@@ -45,8 +45,8 @@ const Dashboard: React.FC = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your applications...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto mb-4"></div>
+          <p className="text-dim-300">Loading your applications...</p>
         </div>
       </div>
     );
@@ -54,9 +54,9 @@ const Dashboard: React.FC = () => {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+      <div className="bg-rose-900 border border-rose-700 rounded-xl p-6 text-center">
         <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-        <p className="text-red-700 font-medium">{error}</p>
+        <p className="text-rose-300 font-medium">{error}</p>
       </div>
     );
   }
@@ -85,11 +85,11 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const COLORS = {
-    primary: '#2563eb',
+    primary: '#bcabae', // rose quartz
     success: '#10b981',
     warning: '#f59e0b',
     danger: '#ef4444',
-    gray: '#6b7280'
+    gray: '#716969' // dim gray
   };
 
   const statusColors = {
@@ -124,29 +124,29 @@ const Dashboard: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Student Dashboard</h1>
-        <p className="text-gray-600">Track your internship applications and their status</p>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Student Dashboard</h1>
+        <p className="text-dim-300">Track your internship applications and their status</p>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Applications</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{totalApplications}</p>
+              <p className="text-sm font-medium text-dim-400">Total Applications</p>
+              <p className="text-2xl font-bold text-light-100 mt-1">{totalApplications}</p>
             </div>
-            <div className="p-3 bg-primary-100 rounded-lg">
-              <Briefcase className="w-6 h-6 text-primary-600" />
+            <div className="p-3 bg-rose-900 rounded-lg">
+              <Briefcase className="w-6 h-6 text-rose-400" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Pending</p>
-              <p className="text-2xl font-bold text-yellow-600 mt-1">{pendingApplications}</p>
+              <p className="text-sm font-medium text-dim-400">Pending</p>
+              <p className="text-2xl font-bold text-yellow-400 mt-1">{pendingApplications}</p>
             </div>
             <div className="p-3 bg-yellow-100 rounded-lg">
               <Clock className="w-6 h-6 text-yellow-600" />
@@ -154,11 +154,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Accepted</p>
-              <p className="text-2xl font-bold text-green-600 mt-1">{acceptedApplications}</p>
+              <p className="text-sm font-medium text-dim-400">Accepted</p>
+              <p className="text-2xl font-bold text-green-400 mt-1">{acceptedApplications}</p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
               <CheckCircle className="w-6 h-6 text-green-600" />
@@ -166,11 +166,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Rejected</p>
-              <p className="text-2xl font-bold text-red-600 mt-1">{rejectedApplications}</p>
+              <p className="text-sm font-medium text-dim-400">Rejected</p>
+              <p className="text-2xl font-bold text-red-400 mt-1">{rejectedApplications}</p>
             </div>
             <div className="p-3 bg-red-100 rounded-lg">
               <XCircle className="w-6 h-6 text-red-600" />
@@ -182,8 +182,8 @@ const Dashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Status Distribution Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Application Status</h3>
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-light-100 mb-4">Application Status</h3>
           {totalApplications > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <PieChart>
@@ -205,15 +205,15 @@ const Dashboard: React.FC = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-dim-400">
               No applications yet
             </div>
           )}
         </div>
 
         {/* Applications by Company Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Applications by Company</h3>
+        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-light-100 mb-4">Applications by Company</h3>
           {companyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <BarChart data={companyData}>
@@ -225,7 +225,7 @@ const Dashboard: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-dim-400">
               No applications yet
             </div>
           )}
@@ -233,36 +233,36 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Applications Table */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">My Applications</h3>
+      <div className="bg-jet-900 rounded-xl shadow-soft border border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="p-6 border-b border-dim-700">
+          <h3 className="text-lg font-semibold text-light-100">My Applications</h3>
         </div>
         <div className="overflow-x-auto">
           {applications.length > 0 ? (
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <tr className="bg-night-800">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
                     Company
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
                     Role Applied
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
                     Applied Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-jet-900 divide-y divide-dim-700">
                 {applications.map((app) => (
-                  <tr key={app.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <tr key={app.id} className="hover:bg-night-800 transition-colors">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-light-100">
                       {app.company_name}
                     </td>
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-light-100">
                       {app.internship_title}
                     </td>
                     <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
@@ -273,9 +273,9 @@ const Dashboard: React.FC = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-dim-300">
                       <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <Calendar className="w-4 h-4 text-dim-400" />
                         <span>{new Date(app.applied_at).toLocaleDateString()}</span>
                       </div>
                     </td>
@@ -285,9 +285,9 @@ const Dashboard: React.FC = () => {
             </table>
           ) : (
             <div className="p-12 text-center">
-              <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium">No applications yet</p>
-              <p className="text-gray-500 text-sm mt-2">Start applying to internships to see them here</p>
+              <Briefcase className="w-12 h-12 text-dim-400 mx-auto mb-4" />
+              <p className="text-dim-300 font-medium">No applications yet</p>
+              <p className="text-dim-400 text-sm mt-2">Start applying to internships to see them here</p>
             </div>
           )}
         </div>

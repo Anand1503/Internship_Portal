@@ -108,16 +108,16 @@ const Sidebar: React.FC = () => {
   return (
     <>
       {/* Mobile Menu Button - Top Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-white border-b border-gray-200 shadow-sm">
+      <div className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-jet-900 border-b border-dim-700 shadow-sm">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-night-800 transition-colors"
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6 text-gray-700" />
+            <Menu className="w-6 h-6 text-rose-400" />
           </button>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+          <h1 className="text-lg font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent">
             Internship Portal
           </h1>
           <div className="w-10"></div> {/* Spacer for centering */}
@@ -134,15 +134,15 @@ const Sidebar: React.FC = () => {
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 z-50 h-full bg-gradient-to-b from-white to-gray-50 border-r border-gray-200 shadow-lg transition-all duration-300 ease-in-out
+        fixed top-0 left-0 z-50 h-full bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:relative lg:z-auto
       `}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between p-4 border-b border-dim-700 bg-night-900">
           {!isCollapsed && (
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent">
               Internship Portal
             </h1>
           )}
@@ -150,9 +150,9 @@ const Sidebar: React.FC = () => {
           {/* Mobile close button */}
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-lg hover:bg-night-800"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5 text-dim-300" />
           </button>
         </div>
 
@@ -168,8 +168,8 @@ const Sidebar: React.FC = () => {
                 className={`
                   flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
                   ${isActive(item.href) 
-                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md' 
-                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-700'
+                    ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-md' 
+                    : 'text-dim-300 hover:bg-rose-900 hover:text-rose-300'
                   }
                   ${isCollapsed ? 'justify-center' : ''}
                 `}
@@ -184,12 +184,12 @@ const Sidebar: React.FC = () => {
         </nav>
 
         {/* Footer with logout */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-dim-700">
           <button
             onClick={handleLogout}
             className={`
-              flex items-center space-x-3 w-full px-3 py-3 rounded-xl text-red-600 
-              hover:bg-red-50 transition-all duration-200 hover:shadow-sm
+              flex items-center space-x-3 w-full px-3 py-3 rounded-xl text-rose-400 
+              hover:bg-rose-900 transition-all duration-200 hover:shadow-sm
               ${isCollapsed ? 'justify-center' : ''}
             `}
           >
@@ -204,9 +204,9 @@ const Sidebar: React.FC = () => {
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="absolute -right-3 top-8 hidden lg:flex items-center justify-center 
-                     w-6 h-6 bg-white border border-gray-300 rounded-full shadow-sm"
+                     w-6 h-6 bg-jet-900 border border-dim-600 rounded-full shadow-sm"
         >
-          <Menu className="w-3 h-3 text-gray-600" />
+          <Menu className="w-3 h-3 text-rose-400" />
         </button>
       </div>
     </>
