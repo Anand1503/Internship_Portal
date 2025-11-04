@@ -14,6 +14,7 @@ import {
   Moon
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface SidebarItem {
   id: string;
@@ -26,7 +27,7 @@ interface SidebarItem {
 const Sidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
+  const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -96,15 +97,15 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* Mobile Menu Button - Top Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-jet-900 border-b border-dim-700 shadow-sm">
-        <div className="flex items-center justify-between px-4 py-3">
+      {/* Mobile Header - only visible on mobile/tablet */}
+      <div className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-light-50 dark:bg-jet-900 border-b border-gray-200 dark:border-dim-700 shadow-sm">
+        <div className="flex items-center justify-between p-4">
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="p-2 rounded-lg hover:bg-night-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-rose-100 dark:hover:bg-night-800 transition-colors"
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6 text-rose-400" />
+            <Menu className="w-6 h-6 text-rose-600 dark:text-rose-400" />
           </button>
           <h1 className="text-lg font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent">
             Internship Portal
@@ -123,13 +124,16 @@ const Sidebar: React.FC = () => {
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 z-50 h-screen bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out flex flex-col
+        fixed top-0 left-0 z-50 h-screen 
+        bg-gradient-to-b from-light-50 to-light-200 dark:from-jet-900 dark:to-night-900 
+        border-r border-gray-200 dark:border-dim-700 
+        shadow-lg transition-all duration-300 ease-in-out flex flex-col
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:sticky lg:top-0 lg:z-auto
       `}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-dim-700 bg-night-900">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-dim-700 bg-light-100 dark:bg-night-900">
           {!isCollapsed && (
             <h1 className="text-xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent">
               Internship Portal
@@ -139,9 +143,9 @@ const Sidebar: React.FC = () => {
           {/* Mobile close button */}
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden p-2 rounded-lg hover:bg-night-800"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-night-800"
           >
-            <X className="w-5 h-5 text-dim-300" />
+            <X className="w-5 h-5 text-gray-600 dark:text-dim-300" />
           </button>
         </div>
 
@@ -158,7 +162,7 @@ const Sidebar: React.FC = () => {
                   flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
                   ${isActive(item.href) 
                     ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-md' 
-                    : 'text-dim-300 hover:bg-rose-900 hover:text-rose-300'
+                    : 'text-gray-700 dark:text-dim-300 hover:bg-rose-100 dark:hover:bg-rose-900 hover:text-rose-600 dark:hover:text-rose-300'
                   }
                   ${isCollapsed ? 'justify-center' : ''}
                 `}
@@ -173,13 +177,13 @@ const Sidebar: React.FC = () => {
         </nav>
 
         {/* Footer with Theme Toggle, Profile and Logout */}
-        <div className="p-4 border-t border-dim-700 space-y-2">
+        <div className="p-4 border-t border-gray-200 dark:border-dim-700 space-y-2">
           {/* Theme Toggle */}
           <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
+            onClick={toggleTheme}
             className={`
               flex items-center space-x-3 w-full px-3 py-3 rounded-xl transition-all duration-200
-              text-dim-300 hover:bg-night-800 hover:text-rose-300
+              text-gray-700 dark:text-dim-300 hover:bg-rose-100 dark:hover:bg-night-800 hover:text-rose-600 dark:hover:text-rose-300
               ${isCollapsed ? 'justify-center' : ''}
             `}
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
@@ -204,7 +208,7 @@ const Sidebar: React.FC = () => {
               flex items-center space-x-3 w-full px-3 py-3 rounded-xl transition-all duration-200
               ${isActive('/profile') 
                 ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-md' 
-                : 'text-dim-300 hover:bg-rose-900 hover:text-rose-300'
+                : 'text-gray-700 dark:text-dim-300 hover:bg-rose-100 dark:hover:bg-rose-900 hover:text-rose-600 dark:hover:text-rose-300'
               }
               ${isCollapsed ? 'justify-center' : ''}
             `}
@@ -219,8 +223,8 @@ const Sidebar: React.FC = () => {
           <button
             onClick={handleLogout}
             className={`
-              flex items-center space-x-3 w-full px-3 py-3 rounded-xl text-rose-400 
-              hover:bg-rose-900 transition-all duration-200 hover:shadow-sm
+              flex items-center space-x-3 w-full px-3 py-3 rounded-xl text-rose-600 dark:text-rose-400 
+              hover:bg-rose-100 dark:hover:bg-rose-900 transition-all duration-200 hover:shadow-sm
               ${isCollapsed ? 'justify-center' : ''}
             `}
           >

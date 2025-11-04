@@ -11,11 +11,13 @@ import SortCandidates from './pages/SortCandidates';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import { ToastProvider } from './contexts/ToastContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   return (
-    <ToastProvider>
-      <Routes>
+    <ThemeProvider>
+      <ToastProvider>
+        <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route
@@ -98,8 +100,9 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
-    </ToastProvider>
+        </Routes>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 
