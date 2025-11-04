@@ -125,28 +125,28 @@ const Dashboard: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Student Dashboard</h1>
-        <p className="text-dim-300">Track your internship applications and their status</p>
+        <p className="text-gray-600 dark:text-dim-300">Track your internship applications and their status</p>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-dim-400">Total Applications</p>
-              <p className="text-2xl font-bold text-light-100 mt-1">{totalApplications}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Total Applications</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-light-100 mt-1">{totalApplications}</p>
             </div>
-            <div className="p-3 bg-rose-900 rounded-lg">
-              <Briefcase className="w-6 h-6 text-rose-400" />
+            <div className="p-3 bg-rose-100 dark:bg-rose-900 rounded-lg">
+              <Briefcase className="w-6 h-6 text-rose-600 dark:text-rose-400" />
             </div>
           </div>
         </div>
 
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-dim-400">Pending</p>
-              <p className="text-2xl font-bold text-yellow-400 mt-1">{pendingApplications}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Pending</p>
+              <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">{pendingApplications}</p>
             </div>
             <div className="p-3 bg-yellow-100 rounded-lg">
               <Clock className="w-6 h-6 text-yellow-600" />
@@ -154,11 +154,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-dim-400">Accepted</p>
-              <p className="text-2xl font-bold text-green-400 mt-1">{acceptedApplications}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Accepted</p>
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">{acceptedApplications}</p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
               <CheckCircle className="w-6 h-6 text-green-600" />
@@ -166,11 +166,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-dim-400">Rejected</p>
-              <p className="text-2xl font-bold text-red-400 mt-1">{rejectedApplications}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Rejected</p>
+              <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">{rejectedApplications}</p>
             </div>
             <div className="p-3 bg-red-100 rounded-lg">
               <XCircle className="w-6 h-6 text-red-600" />
@@ -182,8 +182,8 @@ const Dashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Status Distribution Chart */}
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-light-100 mb-4">Application Status</h3>
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4">Application Status</h3>
           {totalApplications > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <PieChart>
@@ -212,8 +212,8 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Applications by Company Chart */}
-        <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-light-100 mb-4">Applications by Company</h3>
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4">Applications by Company</h3>
           {companyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <BarChart data={companyData}>
@@ -233,36 +233,36 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Applications Table */}
-      <div className="bg-jet-900 rounded-xl shadow-soft border border-dim-700 hover:shadow-medium transition-all duration-300">
-        <div className="p-6 border-b border-dim-700">
-          <h3 className="text-lg font-semibold text-light-100">My Applications</h3>
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="p-6 border-b border-gray-200 dark:border-dim-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100">My Applications</h3>
         </div>
         <div className="overflow-x-auto">
           {applications.length > 0 ? (
             <table className="w-full">
               <thead>
-                <tr className="bg-night-800">
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
+                <tr className="bg-gray-50 dark:bg-night-800">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Company
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Role Applied
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-dim-400 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Applied Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-jet-900 divide-y divide-dim-700">
+              <tbody className="bg-white dark:bg-jet-900 divide-y divide-gray-200 dark:divide-dim-700">
                 {applications.map((app) => (
-                  <tr key={app.id} className="hover:bg-night-800 transition-colors">
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-light-100">
+                  <tr key={app.id} className="hover:bg-gray-50 dark:hover:bg-night-800 transition-colors">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-light-100">
                       {app.company_name}
                     </td>
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-light-100">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-light-100">
                       {app.internship_title}
                     </td>
                     <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
@@ -273,9 +273,9 @@ const Dashboard: React.FC = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-dim-300">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-dim-300">
                       <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4 text-dim-400" />
+                        <Calendar className="w-4 h-4 text-gray-400 dark:text-dim-400" />
                         <span>{new Date(app.applied_at).toLocaleDateString()}</span>
                       </div>
                     </td>
@@ -285,9 +285,9 @@ const Dashboard: React.FC = () => {
             </table>
           ) : (
             <div className="p-12 text-center">
-              <Briefcase className="w-12 h-12 text-dim-400 mx-auto mb-4" />
-              <p className="text-dim-300 font-medium">No applications yet</p>
-              <p className="text-dim-400 text-sm mt-2">Start applying to internships to see them here</p>
+              <Briefcase className="w-12 h-12 text-gray-400 dark:text-dim-400 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-dim-300 font-medium">No applications yet</p>
+              <p className="text-gray-500 dark:text-dim-400 text-sm mt-2">Start applying to internships to see them here</p>
             </div>
           )}
         </div>
