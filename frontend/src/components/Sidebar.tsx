@@ -9,7 +9,9 @@ import {
   Users,
   User,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
@@ -24,6 +26,7 @@ interface SidebarItem {
 const Sidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -123,7 +126,7 @@ const Sidebar: React.FC = () => {
         fixed top-0 left-0 z-50 h-screen bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out flex flex-col
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        lg:static lg:z-auto
+        lg:sticky lg:top-0 lg:z-auto
       `}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-dim-700 bg-night-900">
@@ -169,8 +172,31 @@ const Sidebar: React.FC = () => {
           })}
         </nav>
 
-        {/* Footer with Profile and Logout */}
+        {/* Footer with Theme Toggle, Profile and Logout */}
         <div className="p-4 border-t border-dim-700 space-y-2">
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`
+              flex items-center space-x-3 w-full px-3 py-3 rounded-xl transition-all duration-200
+              text-dim-300 hover:bg-night-800 hover:text-rose-300
+              ${isCollapsed ? 'justify-center' : ''}
+            `}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDarkMode ? (
+              <Sun className="w-5 h-5 flex-shrink-0" />
+            ) : (
+              <Moon className="w-5 h-5 flex-shrink-0" />
+            )}
+            {!isCollapsed && (
+              <span className="font-medium">
+                {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+              </span>
+            )}
+          </button>
+
+          {/* Profile Link */}
           <Link
             to="/profile"
             onClick={() => setIsMobileOpen(false)}
@@ -189,6 +215,7 @@ const Sidebar: React.FC = () => {
             )}
           </Link>
           
+          {/* Logout Button */}
           <button
             onClick={handleLogout}
             className={`
