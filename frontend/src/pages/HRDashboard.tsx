@@ -118,16 +118,16 @@ const HRDashboard: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">HR Dashboard</h1>
-        <p className="text-dim-300">Manage your job postings and track applicant performance</p>
+        <p className="text-gray-600 dark:text-dim-300">Manage your job postings and track applicant performance</p>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Job Postings</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{totalJobs}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Total Job Postings</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-light-100 mt-1">{totalJobs}</p>
             </div>
             <div className="p-3 bg-primary-100 rounded-lg">
               <Briefcase className="w-6 h-6 text-primary-600" />
@@ -135,11 +135,11 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Active Jobs</p>
-              <p className="text-2xl font-bold text-green-600 mt-1">{activeJobs}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Active Jobs</p>
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">{activeJobs}</p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
               <CheckCircle className="w-6 h-6 text-green-600" />
@@ -147,11 +147,11 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Applications</p>
-              <p className="text-2xl font-bold text-blue-600 mt-1">{totalApplications}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Total Applications</p>
+              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">{totalApplications}</p>
             </div>
             <div className="p-3 bg-blue-100 rounded-lg">
               <Users className="w-6 h-6 text-blue-600" />
@@ -159,11 +159,11 @@ const HRDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Avg Applications/Job</p>
-              <p className="text-2xl font-bold text-purple-600 mt-1">{avgApplicationsPerJob}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-dim-400">Avg Applications/Job</p>
+              <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">{avgApplicationsPerJob}</p>
             </div>
             <div className="p-3 bg-purple-100 rounded-lg">
               <TrendingUp className="w-6 h-6 text-purple-600" />
@@ -175,8 +175,8 @@ const HRDashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Applications per Job Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Applications per Job Posting</h3>
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4">Applications per Job Posting</h3>
           {jobs.length > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <BarChart data={applicationsPerJob}>
@@ -188,15 +188,15 @@ const HRDashboard: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-gray-400 dark:text-dim-400">
               No job postings yet
             </div>
           )}
         </div>
 
         {/* Jobs by Location Chart */}
-        <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Jobs by Location</h3>
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4">Jobs by Location</h3>
           {locationData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250} className="sm:h-[300px]">
               <PieChart>
@@ -218,7 +218,7 @@ const HRDashboard: React.FC = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-gray-400 dark:text-dim-400">
               No job postings yet
             </div>
           )}
@@ -226,45 +226,45 @@ const HRDashboard: React.FC = () => {
       </div>
 
       {/* Job Postings Table */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Your Job Postings</h3>
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="p-6 border-b border-gray-200 dark:border-dim-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100">Your Job Postings</h3>
         </div>
         <div className="overflow-x-auto">
           {jobs.length > 0 ? (
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <tr className="bg-gray-50 dark:bg-night-800">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Job Title
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Location
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Stipend
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Applications
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Deadline
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dim-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-jet-900 divide-y divide-gray-200 dark:divide-dim-700">
                 {jobs.map((job) => (
-                  <tr key={job.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={job.id} className="hover:bg-gray-50 dark:hover:bg-night-800 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{job.title}</p>
-                        <p className="text-xs text-gray-500">{job.company_name}</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-light-100">{job.title}</p>
+                        <p className="text-xs text-gray-500 dark:text-dim-400">{job.company_name}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-light-100">
                       {job.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

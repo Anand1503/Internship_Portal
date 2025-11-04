@@ -90,11 +90,11 @@ const Profile: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">My Profile</h1>
-        <p className="text-dim-300">View and manage your account information</p>
+        <p className="text-gray-600 dark:text-dim-300">View and manage your account information</p>
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 overflow-hidden">
         {/* Header with Avatar */}
         <div className="bg-gradient-to-r from-primary-500 to-primary-600 px-4 sm:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
@@ -130,16 +130,16 @@ const Profile: React.FC = () => {
               <User className="w-5 h-5 text-primary-600" />
             </div>
             <div className="flex-1">
-              <label className="text-sm font-medium text-gray-600 mb-1 block">Full Name</label>
+              <label className="text-sm font-medium text-gray-600 dark:text-dim-400 mb-1 block">Full Name</label>
               {editing ? (
                 <input
                   type="text"
                   value={editedName}
                   onChange={(e) => setEditedName(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-dim-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                 />
               ) : (
-                <p className="text-lg text-gray-900">{profile.name}</p>
+                <p className="text-lg text-gray-900 dark:text-light-100">{profile.name}</p>
               )}
             </div>
           </div>
@@ -151,8 +151,8 @@ const Profile: React.FC = () => {
             </div>
             <div className="flex-1">
               <label className="text-sm font-medium text-gray-600 mb-1 block">Email Address</label>
-              <p className="text-lg text-gray-900">{profile.email}</p>
-              <p className="text-sm text-gray-500 mt-1">Email cannot be changed</p>
+              <p className="text-lg text-gray-900 dark:text-light-100">{profile.email}</p>
+              <p className="text-sm text-gray-500 dark:text-dim-400 mt-1">Email cannot be changed</p>
             </div>
           </div>
 
@@ -163,8 +163,8 @@ const Profile: React.FC = () => {
             </div>
             <div className="flex-1">
               <label className="text-sm font-medium text-gray-600 mb-1 block">Account Type</label>
-              <p className="text-lg text-gray-900 capitalize">{profile.role === 'hr' ? 'HR Manager' : 'Student'}</p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-lg text-gray-900 dark:text-light-100 capitalize">{profile.role === 'hr' ? 'HR Manager' : 'Student'}</p>
+              <p className="text-sm text-gray-500 dark:text-dim-400 mt-1">
                 {profile.role === 'hr' 
                   ? 'You can post jobs and manage applications' 
                   : 'You can search and apply for internships'}

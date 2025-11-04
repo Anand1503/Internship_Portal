@@ -57,21 +57,21 @@ const PostJob: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Post New Internship</h1>
-        <p className="text-dim-300">Create a new internship posting to attract qualified candidates</p>
+        <p className="text-gray-600 dark:text-dim-300">Create a new internship posting to attract qualified candidates</p>
       </div>
 
       {/* Form */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-200">
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700">
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Information */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4 flex items-center">
               <Briefcase className="w-5 h-5 mr-2 text-primary-600" />
               Basic Information
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Job Title *
                 </label>
                 <input
@@ -80,24 +80,24 @@ const PostJob: React.FC = () => {
                   value={formData.title}
                   onChange={handleInputChange}
                   placeholder="e.g., Software Engineering Intern"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Company Name *
                 </label>
                 <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
                   <input
                     type="text"
                     name="company_name"
                     value={formData.company_name}
                     onChange={handleInputChange}
                     placeholder="e.g., Tech Corp Inc."
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                     required
                   />
                 </div>
@@ -107,35 +107,35 @@ const PostJob: React.FC = () => {
 
           {/* Location and Details */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4 flex items-center">
               <MapPin className="w-5 h-5 mr-2 text-primary-600" />
               Location & Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Location *
                 </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
                   <input
                     type="text"
                     name="location"
                     value={formData.location}
                     onChange={handleInputChange}
                     placeholder="e.g., San Francisco, CA or Remote"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                     required
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Stipend (Optional)
                 </label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
                   <input
                     type="number"
                     name="stipend"
@@ -144,7 +144,7 @@ const PostJob: React.FC = () => {
                     placeholder="e.g., 2000"
                     min="0"
                     step="100"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                   />
                 </div>
               </div>
@@ -153,13 +153,13 @@ const PostJob: React.FC = () => {
 
           {/* Deadline */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4 flex items-center">
               <Calendar className="w-5 h-5 mr-2 text-primary-600" />
               Application Deadline
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Deadline *
                 </label>
                 <div className="relative">
@@ -170,7 +170,7 @@ const PostJob: React.FC = () => {
                     value={formData.deadline}
                     onChange={handleInputChange}
                     min={getMinDate()}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                     required
                   />
                 </div>
@@ -181,13 +181,13 @@ const PostJob: React.FC = () => {
 
           {/* Description */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4 flex items-center">
               <FileText className="w-5 h-5 mr-2 text-primary-600" />
               Job Description
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Description *
                 </label>
                 <textarea
@@ -205,13 +205,13 @@ const PostJob: React.FC = () => {
 
           {/* Qualifications */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-4 flex items-center">
               <Users className="w-5 h-5 mr-2 text-primary-600" />
               Qualifications
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Minimum Qualifications *
                 </label>
                 <textarea
@@ -226,7 +226,7 @@ const PostJob: React.FC = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
                   Expected Qualifications *
                 </label>
                 <textarea

@@ -114,18 +114,18 @@ const UploadResume: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Resume Management</h1>
-        <p className="text-dim-300">Upload and manage your resumes for internship applications</p>
+        <p className="text-gray-600 dark:text-dim-300">Upload and manage your resumes for internship applications</p>
       </div>
 
       {/* Upload Section */}
-      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Upload New Resume</h2>
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-light-100 mb-6">Upload New Resume</h2>
         
         {uploadError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
             <div className="flex items-center space-x-2">
               <AlertCircle className="w-5 h-5 text-red-500" />
-              <p className="text-red-700">{uploadError}</p>
+              <p className="text-red-700 dark:text-red-400">{uploadError}</p>
             </div>
           </div>
         )}
@@ -133,7 +133,7 @@ const UploadResume: React.FC = () => {
         <div className="space-y-6">
           {/* Title Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
               Resume Title
             </label>
             <input
@@ -141,14 +141,14 @@ const UploadResume: React.FC = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., Software Engineering Resume"
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
               required
             />
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-dim-300 mb-2">
               Select PDF File
             </label>
             <div className="relative">
@@ -161,11 +161,11 @@ const UploadResume: React.FC = () => {
               />
               <label
                 htmlFor="file-upload"
-                className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition-all duration-200"
+                className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-gray-300 dark:border-dim-600 rounded-xl cursor-pointer hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-night-800 transition-all duration-200"
               >
                 <div className="text-center">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 font-medium mb-1">
+                  <Upload className="w-12 h-12 text-gray-400 dark:text-dim-400 mx-auto mb-3" />
+                  <p className="text-gray-600 dark:text-dim-300 font-medium mb-1">
                     {file ? file.name : 'Click to upload or drag and drop'}
                   </p>
                   <p className="text-gray-500 text-sm">
@@ -176,20 +176,20 @@ const UploadResume: React.FC = () => {
             </div>
             
             {file && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+              <div className="mt-4 p-4 bg-gray-50 dark:bg-night-800 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <FileText className="w-5 h-5 text-gray-400" />
+                    <FileText className="w-5 h-5 text-gray-400 dark:text-dim-400" />
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{file.name}</p>
-                      <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-light-100">{file.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-dim-400">{formatFileSize(file.size)}</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setFile(null)}
-                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                    className="p-1 hover:bg-gray-200 dark:hover:bg-night-700 rounded transition-colors"
                   >
-                    <X className="w-4 h-4 text-gray-500" />
+                    <X className="w-4 h-4 text-gray-500 dark:text-dim-400" />
                   </button>
                 </div>
               </div>
@@ -208,9 +208,9 @@ const UploadResume: React.FC = () => {
       </div>
 
       {/* Existing Resumes */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">My Resumes</h2>
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+        <div className="p-6 border-b border-gray-200 dark:border-dim-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-light-100">My Resumes</h2>
         </div>
         
         <div className="p-6">
@@ -221,14 +221,14 @@ const UploadResume: React.FC = () => {
           ) : resumes.length > 0 ? (
             <div className="space-y-4">
               {resumes.map((resume) => (
-                <div key={resume.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div key={resume.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-night-800 rounded-lg hover:bg-gray-100 dark:hover:bg-night-700 transition-colors">
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-white rounded-lg">
+                    <div className="p-3 bg-white dark:bg-jet-900 rounded-lg">
                       <FileText className="w-6 h-6 text-primary-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900">{resume.title}</h3>
-                      <p className="text-sm text-gray-500">
+                      <h3 className="font-medium text-gray-900 dark:text-light-100">{resume.title}</h3>
+                      <p className="text-sm text-gray-400 dark:text-dim-400">
                         Uploaded on {new Date(resume.created_at).toLocaleDateString()}
                       </p>
                     </div>
@@ -260,9 +260,9 @@ const UploadResume: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium mb-2">No resumes uploaded yet</p>
-              <p className="text-gray-500 text-sm">Upload your first resume to start applying for internships</p>
+              <FileText className="w-16 h-16 text-gray-400 dark:text-dim-400 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-dim-300 font-medium mb-2">No resumes uploaded yet</p>
+              <p className="text-gray-500 dark:text-dim-400 text-sm">Upload your first resume to start applying for internships</p>
             </div>
           )}
         </div>
