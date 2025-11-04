@@ -162,14 +162,14 @@ const SortCandidates: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Sort Candidates</h1>
-        <p className="text-dim-300">Review and manage applications for your job postings</p>
+        <p className="text-gray-600 dark:text-dim-300">Review and manage applications for your job postings</p>
       </div>
 
       {/* Job Selection */}
-      <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 hover:shadow-medium transition-all duration-300">
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
         <div className="flex items-center mb-4">
           <Briefcase className="w-5 h-5 mr-2 text-primary-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Select Job Posting</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100">Select Job Posting</h3>
         </div>
         
         {loadingJobs ? (
@@ -184,14 +184,14 @@ const SortCandidates: React.FC = () => {
                 onClick={() => setSelectedJob(job.id)}
                 className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
                   selectedJob === job.id
-                    ? 'border-primary-500 bg-primary-50 shadow-medium'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-medium'
+                    : 'border-gray-200 dark:border-dim-600 hover:border-gray-300 dark:hover:border-dim-500 hover:bg-gray-50 dark:hover:bg-night-800'
                 }`}
               >
-                <h4 className="font-semibold text-gray-900 mb-1">{job.title}</h4>
-                <p className="text-sm text-gray-600 mb-2">{job.company_name}</p>
+                <h4 className="font-semibold text-gray-900 dark:text-light-100 mb-1">{job.title}</h4>
+                <p className="text-sm text-gray-600 dark:text-dim-300 mb-2">{job.company_name}</p>
                 {job.location && (
-                  <p className="text-xs text-gray-500 flex items-center">
+                  <p className="text-xs text-gray-500 dark:text-dim-400 flex items-center">
                     <Filter className="w-3 h-3 mr-1" />
                     {job.location}
                   </p>
@@ -204,14 +204,14 @@ const SortCandidates: React.FC = () => {
 
       {/* Selected Job Info and Export */}
       {selectedJob && selectedJobData && (
-        <div className="bg-white rounded-xl shadow-soft border border-gray-200 hover:shadow-medium transition-all duration-300">
-          <div className="p-6 border-b border-gray-200">
+        <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
+          <div className="p-6 border-b border-gray-200 dark:border-dim-700">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-light-100 mb-1">
                   {selectedJobData.title}
                 </h3>
-                <p className="text-sm text-gray-600">{selectedJobData.company_name}</p>
+                <p className="text-sm text-gray-600 dark:text-dim-300">{selectedJobData.company_name}</p>
               </div>
               <button
                 onClick={handleExport}
@@ -229,13 +229,13 @@ const SortCandidates: React.FC = () => {
               <div className="flex items-center justify-center h-32">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading applicants...</p>
+                  <p className="text-gray-600 dark:text-dim-300">Loading applicants...</p>
                 </div>
               </div>
             ) : applicants.length > 0 ? (
               <div className="space-y-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="font-medium text-gray-900">
+                  <h4 className="font-medium text-gray-900 dark:text-light-100">
                     {applicants.length} applicant{applicants.length !== 1 ? 's' : ''}
                   </h4>
                 </div>

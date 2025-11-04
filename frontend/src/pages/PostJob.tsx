@@ -196,7 +196,7 @@ const PostJob: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Provide a detailed description of the internship role, responsibilities, and what the candidate will be working on..."
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                   required
                 />
               </div>
@@ -220,7 +220,7 @@ const PostJob: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="List the minimum requirements candidates must have (e.g., Currently enrolled in a computer science program, Basic programming knowledge, etc.)"
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                   required
                 />
               </div>
@@ -235,7 +235,7 @@ const PostJob: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="List preferred qualifications that would make a candidate ideal (e.g., Experience with specific technologies, Previous internship experience, etc.)"
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none bg-white dark:bg-night-800 text-gray-900 dark:text-light-100"
                   required
                 />
               </div>
