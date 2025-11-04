@@ -120,7 +120,7 @@ const Sidebar: React.FC = () => {
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 z-50 h-full bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out
+        fixed top-0 left-0 z-50 h-screen bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out flex flex-col
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:relative lg:z-auto
@@ -143,7 +143,7 @@ const Sidebar: React.FC = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {filteredItems.map((item) => {
             const Icon = item.icon;
             return (
