@@ -123,7 +123,7 @@ const Sidebar: React.FC = () => {
         fixed top-0 left-0 z-50 h-screen bg-gradient-to-b from-jet-900 to-night-900 border-r border-dim-700 shadow-lg transition-all duration-300 ease-in-out flex flex-col
         ${isCollapsed ? 'w-20' : 'w-64'}
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        lg:relative lg:z-auto
+        lg:static lg:z-auto
       `}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-dim-700 bg-night-900">
