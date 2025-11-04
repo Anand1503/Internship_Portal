@@ -11,10 +11,22 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Get initial theme from localStorage or default to dark
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme ? savedTheme === 'dark' : true;
+    const initialIsDark = savedTheme ? savedTheme === 'dark' : true;
+    
+    // Apply theme immediately on mount
+    const root = document.documentElement;
+    if (initialIsDark) {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else {
+      root.classList.add('light');
+      root.classList.remove('dark');
+    }
+    
+    return initialIsDark;
   });
 
-  // Apply theme to document root
+  // Apply theme to document root when it changes
   useEffect(() => {
     const root = document.documentElement;
     if (isDarkMode) {
@@ -26,6 +38,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     // Save to localStorage
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    console.log('Theme changed to:', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   const toggleTheme = () => {

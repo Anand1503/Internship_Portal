@@ -117,42 +117,42 @@ const SearchInternships: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-rose-300 bg-clip-text text-transparent mb-2">Search Internships</h1>
-        <p className="text-dim-300">Find and apply to internship opportunities</p>
+        <p className="text-gray-600 dark:text-dim-300">Find and apply to internship opportunities</p>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-jet-900 rounded-xl shadow-soft p-6 border border-dim-700">
+      <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dim-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by title or description..."
-              className="w-full pl-10 pr-4 py-3 border border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-night-800 text-light-100 placeholder-dim-400 focus:bg-night-700"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100 placeholder-gray-400 dark:placeholder-dim-400 focus:bg-gray-50 dark:focus:bg-night-700"
             />
           </div>
           
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dim-400 w-5 h-5" />
+            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
             <input
               type="text"
               value={locationFilter}
               onChange={(e) => setLocationFilter(e.target.value)}
               placeholder="Filter by location..."
-              className="w-full pl-10 pr-4 py-3 border border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-night-800 text-light-100 placeholder-dim-400 focus:bg-night-700"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100 placeholder-gray-400 dark:placeholder-dim-400 focus:bg-gray-50 dark:focus:bg-night-700"
             />
           </div>
           
           <div className="relative">
-            <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dim-400 w-5 h-5" />
+            <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-dim-400 w-5 h-5" />
             <input
               type="text"
               value={companyFilter}
               onChange={(e) => setCompanyFilter(e.target.value)}
               placeholder="Filter by company..."
-              className="w-full pl-10 pr-4 py-3 border border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-night-800 text-light-100 placeholder-dim-400 focus:bg-night-700"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition-all duration-200 bg-white dark:bg-night-800 text-gray-900 dark:text-light-100 placeholder-gray-400 dark:placeholder-dim-400 focus:bg-gray-50 dark:focus:bg-night-700"
             />
           </div>
 
@@ -162,7 +162,7 @@ const SearchInternships: React.FC = () => {
               setLocationFilter('');
               setCompanyFilter('');
             }}
-            className="px-4 py-3 border border-dim-600 rounded-xl text-dim-300 hover:bg-rose-900 hover:text-rose-300 transition-all duration-200"
+            className="px-4 py-3 border border-gray-300 dark:border-dim-600 rounded-xl text-gray-700 dark:text-dim-300 hover:bg-rose-100 dark:hover:bg-rose-900 hover:text-rose-600 dark:hover:text-rose-300 transition-all duration-200"
           >
             Clear Filters
           </button>
@@ -174,15 +174,15 @@ const SearchInternships: React.FC = () => {
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto mb-4"></div>
-            <p className="text-dim-300">Searching for internships...</p>
+            <p className="text-gray-600 dark:text-dim-300">Searching for internships...</p>
           </div>
         </div>
       )}
 
       {/* Error State */}
       {error && !loading && (
-        <div className="bg-rose-900 border border-rose-700 rounded-xl p-6 text-center">
-          <p className="text-rose-300 font-medium">{error}</p>
+        <div className="bg-rose-50 dark:bg-rose-900 border border-rose-200 dark:border-rose-700 rounded-xl p-6 text-center">
+          <p className="text-rose-700 dark:text-rose-300 font-medium">{error}</p>
         </div>
       )}
 
@@ -191,15 +191,15 @@ const SearchInternships: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {internships.length > 0 ? (
             internships.map((internship) => (
-              <div key={internship.id} className="bg-jet-900 rounded-xl shadow-soft border border-dim-700 hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
+              <div key={internship.id} className="bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
                 <div className="p-6">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-light-100 mb-2">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-light-100 mb-2">
                         {internship.title}
                       </h3>
-                      <div className="flex items-center space-x-4 text-sm text-dim-300">
+                      <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-dim-300">
                         <div className="flex items-center space-x-1">
                           <Building2 className="w-4 h-4" />
                           <span>{internship.company_name}</span>
@@ -219,23 +219,23 @@ const SearchInternships: React.FC = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-dim-200 mb-4 line-clamp-3">
+                  <p className="text-gray-700 dark:text-dim-200 mb-4 line-clamp-3">
                     {internship.description}
                   </p>
 
                   {/* Qualifications */}
                   {internship.min_qualifications && (
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-light-100 mb-2">Minimum Qualifications:</h4>
-                      <p className="text-sm text-dim-300 line-clamp-2">{internship.min_qualifications}</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-light-100 mb-2">Minimum Qualifications:</h4>
+                      <p className="text-sm text-gray-600 dark:text-dim-300 line-clamp-2">{internship.min_qualifications}</p>
                     </div>
                   )}
 
                   {/* Deadline */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-dim-400" />
-                      <span className="text-sm text-dim-300">Deadline:</span>
+                      <Calendar className="w-4 h-4 text-gray-400 dark:text-dim-400" />
+                      <span className="text-sm text-gray-600 dark:text-dim-300">Deadline:</span>
                       <span className={`text-sm font-medium ${
                         isDeadlinePassed(internship.deadline) ? 'text-red-600' : 'text-yellow-600'
                       }`}>
@@ -260,10 +260,10 @@ const SearchInternships: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="col-span-2 bg-jet-900 rounded-xl shadow-soft border border-dim-700 p-12 text-center">
-              <Briefcase className="w-16 h-16 text-dim-400 mx-auto mb-4" />
-              <p className="text-dim-300 font-medium text-lg mb-2">No internships found</p>
-              <p className="text-dim-400">Try adjusting your search criteria or filters</p>
+            <div className="col-span-2 bg-white dark:bg-jet-900 rounded-xl shadow-soft border border-gray-200 dark:border-dim-700 p-12 text-center">
+              <Briefcase className="w-16 h-16 text-gray-400 dark:text-dim-400 mx-auto mb-4" />
+              <p className="text-gray-700 dark:text-dim-300 font-medium text-lg mb-2">No internships found</p>
+              <p className="text-gray-500 dark:text-dim-400">Try adjusting your search criteria or filters</p>
             </div>
           )}
         </div>
