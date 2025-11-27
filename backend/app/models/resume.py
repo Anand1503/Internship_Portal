@@ -16,6 +16,7 @@ class Resume(Base):
     # Relationships
     user = relationship("User", back_populates="resumes")
     applications = relationship("Application", back_populates="resume")
+    analyses = relationship("ResumeAnalysis", back_populates="resume", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Resume(id={self.id}, title={self.title}, user_id={self.user_id})>"

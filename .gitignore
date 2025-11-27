@@ -135,7 +135,7 @@ temp/
 *.sqlite3
 
 # Alembic
-alembic/versions/*.py
+# alembic/versions/*.py  # Commented out - we want to track migrations
 !alembic/versions/
 
 # FastAPI

@@ -47,6 +47,7 @@ Internship Portal is a comprehensive platform that bridges the gap between talen
 - ✅ Browse and search internships with advanced filters
 - ✅ Upload and manage multiple resumes (PDF)
 - ✅ One-click application with resume selection
+- ✅ AI-Powered Resume Analysis (Score, Strengths, Suggestions)
 - ✅ Track application status (Pending, Accepted, Rejected)
 - ✅ Interactive dashboard with application analytics
 - ✅ Profile management
@@ -500,6 +501,8 @@ Once the backend is running, visit:
 - `POST /api/v1/resumes/upload` - Upload resume
 - `GET /api/v1/resumes/me` - Get user's resumes
 - `GET /api/v1/resumes/{id}/download` - Download resume
+- `POST /api/v1/resumes/{id}/analyze` - Analyze resume with AI
+- `GET /api/v1/resumes/{id}/analysis` - Get analysis results
 
 ### HR Endpoints
 - `GET /api/v1/hr/my_jobs` - Get HR's posted jobs
@@ -547,6 +550,9 @@ DATABASE_URL=postgresql://user:password@localhost/internship_portal
 SECRET_KEY=your-super-secret-jwt-key-here
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+# AI Resume Analyzer
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-1.5-flash
 ```
 
 ### Frontend (.env)

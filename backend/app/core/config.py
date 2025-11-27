@@ -42,6 +42,14 @@ class Settings(BaseSettings):
     # Logging
     LOG_LEVEL: str = "INFO"
     
+    # AI Resume Analyzer
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-2.0-flash"
+    ANALYZER_TIMEOUT_SECONDS: int = 60
+
+
+
+    
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",

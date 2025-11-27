@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { useToast } from '../contexts/ToastContext';
-import { Upload, FileText, Trash2, Download, AlertCircle, X } from 'lucide-react';
+import { Upload, FileText, Trash2, Download, AlertCircle, X, Sparkles, Eye } from 'lucide-react';
+import { startResumeAnalysis, listAnalysesForResume, type ResumeAnalysisListItem } from '../api/resumeAnalysis';
+import ResumeScoreBadge from '../components/ResumeScoreBadge';
+import AnalysisStatusBadge from '../components/AnalysisStatusBadge';
 
 interface Resume {
   id: number;
@@ -10,15 +14,21 @@ interface Resume {
   created_at: string;
 }
 
+interface ResumeWithAnalysis extends Resume {
+  latestAnalysis?: ResumeAnalysisListItem;
+  analyzing?: boolean;
+}
+
 const UploadResume: React.FC = () => {
   const [title, setTitle] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState('');
-  const [resumes, setResumes] = useState<Resume[]>([]);
+  const [resumes, setResumes] = useState<ResumeWithAnalysis[]>([]);
   const [resumesLoading, setResumesLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState<number | null>(null);
   const { success, error: showError } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchResumes();
@@ -27,7 +37,25 @@ const UploadResume: React.FC = () => {
   const fetchResumes = async () => {
     try {
       const response = await api.resumes.getMyResumes();
-      setResumes(response.data);
+      const resumesData: Resume[] = response.data;
+
+      // Fetch latest analyses for each resume
+      const resumesWithAnalyses = await Promise.all(
+        resumesData.map(async (resume) => {
+          try {
+            const analyses = await listAnalysesForResume(resume.id);
+            return {
+              ...resume,
+              latestAnalysis: analyses && analyses.length > 0 ? analyses[0] : undefined,
+              analyzing: false
+            };
+          } catch {
+            return { ...resume, analyzing: false };
+          }
+        })
+      );
+
+      setResumes(resumesWithAnalyses);
     } catch (error: any) {
       showError('Failed to fetch resumes');
     } finally {
@@ -67,6 +95,31 @@ const UploadResume: React.FC = () => {
       showError(errorMessage);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAnalyze = async (resumeId: number) => {
+    // Set analyzing state for this resume
+    setResumes(prev => prev.map(r =>
+      r.id === resumeId ? { ...r, analyzing: true } : r
+    ));
+
+    try {
+      const analysis = await startResumeAnalysis(resumeId);
+      success('Resume analysis started!');
+
+      // Update resume with new analysis
+      setResumes(prev => prev.map(r =>
+        r.id === resumeId ? { ...r, latestAnalysis: analysis as unknown as ResumeAnalysisListItem, analyzing: false } : r
+      ));
+
+      // Navigate to analysis page
+      navigate(`/resumes/analysis/${analysis.id}`);
+    } catch (error: any) {
+      showError(error.response?.data?.detail || 'Failed to start analysis');
+      setResumes(prev => prev.map(r =>
+        r.id === resumeId ? { ...r, analyzing: false } : r
+      ));
     }
   };
 
@@ -120,7 +173,7 @@ const UploadResume: React.FC = () => {
       {/* Upload Section */}
       <div className="bg-white dark:bg-jet-900 rounded-xl shadow-soft p-6 border border-gray-200 dark:border-dim-700 hover:shadow-medium transition-all duration-300">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-light-100 mb-6">Upload New Resume</h2>
-        
+
         {uploadError && (
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
             <div className="flex items-center space-x-2">
@@ -174,7 +227,7 @@ const UploadResume: React.FC = () => {
                 </div>
               </label>
             </div>
-            
+
             {file && (
               <div className="mt-4 p-4 bg-gray-50 dark:bg-night-800 rounded-lg">
                 <div className="flex items-center justify-between">
@@ -212,7 +265,7 @@ const UploadResume: React.FC = () => {
         <div className="p-6 border-b border-gray-200 dark:border-dim-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-light-100">My Resumes</h2>
         </div>
-        
+
         <div className="p-6">
           {resumesLoading ? (
             <div className="flex items-center justify-center h-32">
@@ -222,22 +275,52 @@ const UploadResume: React.FC = () => {
             <div className="space-y-4">
               {resumes.map((resume) => (
                 <div key={resume.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-night-800 rounded-lg hover:bg-gray-100 dark:hover:bg-night-700 transition-colors">
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 flex-1">
                     <div className="p-3 bg-white dark:bg-jet-900 rounded-lg">
                       <FileText className="w-6 h-6 text-primary-600" />
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 dark:text-light-100">{resume.title}</h3>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-medium text-gray-900 dark:text-light-100">{resume.title}</h3>
+                        {resume.latestAnalysis && resume.latestAnalysis.score !== null && (
+                          <ResumeScoreBadge score={resume.latestAnalysis.score} size="sm" />
+                        )}
+                        {resume.latestAnalysis && (
+                          <AnalysisStatusBadge status={resume.latestAnalysis.status as any} />
+                        )}
+                      </div>
                       <p className="text-sm text-gray-400 dark:text-dim-400">
                         Uploaded on {new Date(resume.created_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center space-x-2">
                     <button
+                      onClick={() => handleAnalyze(resume.id)}
+                      disabled={resume.analyzing || (resume.latestAnalysis?.status === 'pending')}
+                      className="flex items-center gap-1.5 px-3 py-2 text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Analyze with AI"
+                    >
+                      <Sparkles className={`w-4 h-4 ${resume.analyzing ? 'animate-pulse' : ''}`} />
+                      <span className="text-sm font-medium">
+                        {resume.analyzing ? 'Starting...' : resume.latestAnalysis ? 'Re-analyze' : 'Analyze'}
+                      </span>
+                    </button>
+
+                    {resume.latestAnalysis && (
+                      <button
+                        onClick={() => navigate(`/resumes/analysis/${resume.latestAnalysis!.id}`)}
+                        className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
+                        title="View Analysis"
+                      >
+                        <Eye className="w-5 h-5" />
+                      </button>
+                    )}
+
+                    <button
                       onClick={() => handleDownload(resume.id, resume.title)}
-                      className="p-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200"
+                      className="p-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200"
                       title="Download"
                     >
                       <Download className="w-5 h-5" />
@@ -245,7 +328,7 @@ const UploadResume: React.FC = () => {
                     <button
                       onClick={() => handleDelete(resume.id)}
                       disabled={deleteLoading === resume.id}
-                      className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 disabled:opacity-50"
+                      className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200 disabled:opacity-50"
                       title="Delete"
                     >
                       {deleteLoading === resume.id ? (

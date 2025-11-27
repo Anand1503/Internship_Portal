@@ -16,11 +16,19 @@ from .application import (
     ApplicationList,
     ApplicationStatus
 )
+from .resume_analysis import (
+    ResumeAnalysisCreate,
+    ResumeAnalysisRead,
+    ResumeAnalysisListItem,
+    AnalysisResultUpdate,
+    AnalysisStatus
+)
 
 __all__ = [
     "UserBase", "UserCreate", "UserUpdate", "UserOut", "UserLogin", "Token", "TokenData",
     "CompanyBase", "CompanyCreate", "CompanyUpdate", "CompanyOut",
     "InternshipBase", "InternshipCreate", "InternshipUpdate", "InternshipOut", "InternshipList",
     "ResumeBase", "ResumeCreate", "ResumeUpdate", "ResumeOut", "ResumeResponse",
-    "ApplicationBase", "ApplicationCreate", "ApplicationUpdate", "ApplicationOut", "ApplicationList", "ApplicationStatus"
+    "ApplicationBase", "ApplicationCreate", "ApplicationUpdate", "ApplicationOut", "ApplicationList", "ApplicationStatus",
+    "ResumeAnalysisCreate", "ResumeAnalysisRead", "ResumeAnalysisListItem", "AnalysisResultUpdate", "AnalysisStatus"
 ]
