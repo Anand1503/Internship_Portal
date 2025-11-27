@@ -107,7 +107,7 @@ class TestResumeAnalyzerService:
             sample_resume  # Second call for resume
         ]
         
-        mock_extract_pdf.return_value = "This is a sample resume text with experience and skills..."
+        mock_extract_pdf.return_value = "This is a sample resume text with experience and skills. It needs to be longer than 100 characters to pass the validation check in the service. So I am adding more text here to ensure it passes the length check."
         
         mock_ai_client = Mock()
         mock_ai_client.analyze_resume.return_value = sample_analysis_result
@@ -150,7 +150,7 @@ class TestResumeAnalyzerService:
             sample_resume
         ]
         
-        mock_extract_pdf.return_value = "Resume text..."
+        mock_extract_pdf.return_value = "This is a sample resume text with experience and skills. It needs to be longer than 100 characters to pass the validation check in the service. So I am adding more text here to ensure it passes the length check."
         
         mock_ai_client = Mock()
         mock_ai_client.analyze_resume.side_effect = AIClientError("API rate limit exceeded")

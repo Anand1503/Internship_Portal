@@ -5,11 +5,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from .. import app
-from ..db.session import get_db, Base
+from ..database import get_db, Base
 from ..models import User
 
 # Create test database
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
@@ -41,7 +41,7 @@ class TestAuth:
     def test_register_user(self):
         """Test user registration endpoint"""
         response = client.post(
-            "/auth/register",
+            "/api/v1/auth/register",
             json={
                 "email": "test@example.com",
                 "password": "testpassword",
@@ -60,7 +60,7 @@ class TestAuth:
         """Test registration with duplicate email fails"""
         # First registration
         client.post(
-            "/auth/register",
+            "/api/v1/auth/register",
             json={
                 "email": "test@example.com",
                 "password": "testpassword",
@@ -71,7 +71,7 @@ class TestAuth:
         
         # Second registration with same email
         response = client.post(
-            "/auth/register",
+            "/api/v1/auth/register",
             json={
                 "email": "test@example.com",
                 "password": "anotherpassword",
@@ -86,7 +86,7 @@ class TestAuth:
         """Test login with valid credentials"""
         # Register user first
         client.post(
-            "/auth/register",
+            "/api/v1/auth/register",
             json={
                 "email": "test@example.com",
                 "password": "testpassword",
@@ -97,7 +97,7 @@ class TestAuth:
         
         # Login
         response = client.post(
-            "/auth/login",
+            "/api/v1/auth/login",
             data={
                 "username": "test@example.com",
                 "password": "testpassword"
@@ -112,7 +112,7 @@ class TestAuth:
     def test_login_invalid_credentials(self):
         """Test login with invalid credentials fails"""
         response = client.post(
-            "/auth/login",
+            "/api/v1/auth/login",
             data={
                 "username": "nonexistent@example.com",
                 "password": "wrongpassword"
@@ -125,7 +125,7 @@ class TestAuth:
         """Test getting current user with valid token"""
         # Register and login
         client.post(
-            "/auth/register",
+            "/api/v1/auth/register",
             json={
                 "email": "test@example.com",
                 "password": "testpassword",
@@ -135,7 +135,7 @@ class TestAuth:
         )
         
         login_response = client.post(
-            "/auth/login",
+            "/api/v1/auth/login",
             data={
                 "username": "test@example.com",
                 "password": "testpassword"
@@ -145,7 +145,7 @@ class TestAuth:
         
         # Get current user
         response = client.get(
-            "/auth/me",
+            "/api/v1/auth/me",
             headers={"Authorization": f"Bearer {token}"}
         )
         assert response.status_code == 200
@@ -156,7 +156,7 @@ class TestAuth:
     def test_get_current_user_invalid_token(self):
         """Test getting current user with invalid token fails"""
         response = client.get(
-            "/auth/me",
+            "/api/v1/auth/me",
             headers={"Authorization": "Bearer invalid_token"}
         )
         assert response.status_code == 401

@@ -5,11 +5,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from .. import app
-from ..db.session import get_db, Base
+from ..database import get_db, Base
 from ..models import User, Company, Internship
 
 # Create test database
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
@@ -42,7 +42,7 @@ def hr_user_token():
     """Create an HR user and return auth token"""
     # Register HR user
     client.post(
-        "/auth/register",
+        "/api/v1/auth/register",
         json={
             "email": "hr@example.com",
             "password": "hrpassword",
@@ -53,7 +53,7 @@ def hr_user_token():
     
     # Login and get token
     response = client.post(
-        "/auth/login",
+        "/api/v1/auth/login",
         data={
             "username": "hr@example.com",
             "password": "hrpassword"
@@ -66,7 +66,7 @@ def student_user_token():
     """Create a student user and return auth token"""
     # Register student user
     client.post(
-        "/auth/register",
+        "/api/v1/auth/register",
         json={
             "email": "student@example.com",
             "password": "studentpassword",
@@ -77,7 +77,7 @@ def student_user_token():
     
     # Login and get token
     response = client.post(
-        "/auth/login",
+        "/api/v1/auth/login",
         data={
             "username": "student@example.com",
             "password": "studentpassword"
@@ -89,7 +89,7 @@ class TestInternships:
     def test_create_internship_hr_success(self, hr_user_token):
         """Test HR user can create internship"""
         response = client.post(
-            "/internships/",
+            "/api/v1/internships/",
             json={
                 "title": "Software Engineer Intern",
                 "company_name": "Test Company",
@@ -111,7 +111,7 @@ class TestInternships:
     def test_create_internship_student_forbidden(self, student_user_token):
         """Test student user cannot create internship"""
         response = client.post(
-            "/internships/",
+            "/api/v1/internships/",
             json={
                 "title": "Software Engineer Intern",
                 "company_name": "Test Company",
@@ -130,7 +130,7 @@ class TestInternships:
         """Test getting all internships"""
         # Create an internship first
         client.post(
-            "/internships/",
+            "/api/v1/internships/",
             json={
                 "title": "Software Engineer Intern",
                 "company_name": "Test Company",
@@ -145,7 +145,7 @@ class TestInternships:
         )
         
         # Get all internships
-        response = client.get("/internships/")
+        response = client.get("/api/v1/internships/")
         assert response.status_code == 200
         data = response.json()
         assert len(data) == 1
@@ -155,7 +155,7 @@ class TestInternships:
         """Test searching internships by role"""
         # Create internships
         client.post(
-            "/internships/",
+            "/api/v1/internships/",
             json={
                 "title": "Software Engineer Intern",
                 "company_name": "Test Company",
@@ -167,7 +167,7 @@ class TestInternships:
         )
         
         client.post(
-            "/internships/",
+            "/api/v1/internships/",
             json={
                 "title": "Marketing Intern",
                 "company_name": "Test Company",
@@ -179,7 +179,7 @@ class TestInternships:
         )
         
         # Search for software roles
-        response = client.get("/internships/?q=software")
+        response = client.get("/api/v1/internships/?q=software")
         assert response.status_code == 200
         data = response.json()
         assert len(data) == 1
