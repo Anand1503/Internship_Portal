@@ -6,7 +6,7 @@ from sqlalchemy.pool import StaticPool
 
 from .. import app
 from ..database import get_db, Base
-from ..models import User
+from ..models import User, Company, Internship, Resume, Application, ResumeAnalysis
 
 # Create test database
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
