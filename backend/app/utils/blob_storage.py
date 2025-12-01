@@ -5,16 +5,19 @@ import os
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional
-from io import BytesIO
 
-from azure.storage.blob import BlobServiceClient, BlobSasPermissions, generate_blob_sas
 from fastapi import UploadFile, HTTPException
 
 from ..core.config import settings
 
 
-def get_blob_service_client() -> BlobServiceClient:
+def get_blob_service_client():
     """Create and return a BlobServiceClient instance"""
+    try:
+        from azure.storage.blob import BlobServiceClient
+    except ImportError:
+        raise ImportError("azure-storage-blob package not installed. Install with: pip install azure-storage-blob")
+    
     if not settings.AZURE_STORAGE_CONNECTION_STRING:
         raise ValueError("Azure Storage connection string not configured")
     
@@ -91,6 +94,11 @@ def get_blob_sas_url(blob_url: str, expiry_hours: int = 1) -> str:
     Returns:
         SAS URL
     """
+    try:
+        from azure.storage.blob import BlobSasPermissions, generate_blob_sas
+    except ImportError:
+        raise ImportError("azure-storage-blob package not installed")
+        
     try:
         # Extract blob name from URL
         blob_name = blob_url.split(f"/{settings.AZURE_STORAGE_CONTAINER_NAME}/")[-1]
