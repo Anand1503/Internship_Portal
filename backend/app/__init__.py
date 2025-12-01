@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware 
 from .core.config import settings 
 from .database import engine, Base 
-from .routers import auth, resumes, internships, applications, hr, jobs, resume_analysis
+from .routers import auth, resumes, internships, applications, hr, jobs, resume_analysis, diagnostics
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
@@ -34,3 +34,4 @@ app.include_router(internships.router, prefix=f"{settings.API_V1_STR}/internship
 app.include_router(applications.router, prefix=f"{settings.API_V1_STR}/applications", tags=["applications"])
 app.include_router(hr.router, prefix=f"{settings.API_V1_STR}/hr", tags=["hr"])
 app.include_router(jobs.router, prefix=f"{settings.API_V1_STR}/jobs", tags=["jobs"])
+app.include_router(diagnostics.router, prefix=f"{settings.API_V1_STR}/diagnostics", tags=["diagnostics"])
