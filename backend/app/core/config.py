@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:8000"]
     
     # File Upload
-    RESUME_UPLOAD_DIR: str = "resumes"
+    RESUME_UPLOAD_DIR: str = "/tmp/resumes"  # Use /tmp for container write permissions
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB
     ALLOWED_FILE_TYPES: List[str] = ["application/pdf"]
     
