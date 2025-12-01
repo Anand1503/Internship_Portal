@@ -1,44 +1,7 @@
 import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
-
-from .. import app
-from ..database import get_db, Base
-from ..models import User, Company, Internship, Resume, Application, ResumeAnalysis
-
-# Create test database
-SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
-)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Override the database dependency
-def override_get_db():
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
-
-app.dependency_overrides[get_db] = override_get_db
-
-# Create test client
-client = TestClient(app)
-
-# Setup test database
-@pytest.fixture(scope="function", autouse=True)
-def setup_database():
-    Base.metadata.create_all(bind=engine)
-    yield
-    Base.metadata.drop_all(bind=engine)
 
 class TestAuth:
-    def test_register_user(self):
+    def test_register_user(self, client):
         """Test user registration endpoint"""
         response = client.post(
             "/api/v1/auth/register",
@@ -56,7 +19,7 @@ class TestAuth:
         assert data["role"] == "student"
         assert "id" in data
 
-    def test_register_duplicate_email(self):
+    def test_register_duplicate_email(self, client):
         """Test registration with duplicate email fails"""
         # First registration
         client.post(
@@ -82,7 +45,7 @@ class TestAuth:
         assert response.status_code == 400
         assert "already registered" in response.json()["detail"].lower()
 
-    def test_login_valid_credentials(self):
+    def test_login_valid_credentials(self, client):
         """Test login with valid credentials"""
         # Register user first
         client.post(
@@ -109,7 +72,7 @@ class TestAuth:
         assert data["token_type"] == "bearer"
         assert data["user"]["email"] == "test@example.com"
 
-    def test_login_invalid_credentials(self):
+    def test_login_invalid_credentials(self, client):
         """Test login with invalid credentials fails"""
         response = client.post(
             "/api/v1/auth/login",
@@ -121,7 +84,7 @@ class TestAuth:
         assert response.status_code == 401
         assert "incorrect" in response.json()["detail"].lower()
 
-    def test_get_current_user(self):
+    def test_get_current_user(self, client):
         """Test getting current user with valid token"""
         # Register and login
         client.post(
@@ -153,7 +116,7 @@ class TestAuth:
         assert data["email"] == "test@example.com"
         assert data["name"] == "Test User"
 
-    def test_get_current_user_invalid_token(self):
+    def test_get_current_user_invalid_token(self, client):
         """Test getting current user with invalid token fails"""
         response = client.get(
             "/api/v1/auth/me",
