@@ -37,7 +37,7 @@ async def save_resume_file(file: UploadFile) -> str:
     # Save the file
     try:
         # Reset file pointer to beginning (in case it was read for blob upload attempt)
-        await file.seek(0)
+        file.file.seek(0)
         
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
