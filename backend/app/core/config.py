@@ -46,6 +46,12 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-2.0-flash"
     ANALYZER_TIMEOUT_SECONDS: int = 60
+    
+    # Azure Blob Storage
+    AZURE_STORAGE_CONNECTION_STRING: str = ""
+    AZURE_STORAGE_CONTAINER_NAME: str = "resumes"
+    USE_AZURE_BLOB: bool = False  # Feature flag to enable blob storage
+
 
 
 

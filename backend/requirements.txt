@@ -44,3 +44,5 @@ pypdf==5.1.0
 pdfminer.six==20240706
 tenacity==9.0.0
 
+# Azure Blob Storage
+azure-storage-blob==12.19.0

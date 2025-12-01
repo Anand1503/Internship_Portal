@@ -73,18 +73,33 @@ def download_resume(
     db: Session = Depends(get_db)
 ):
     """Download a resume file"""
+    from fastapi.responses import RedirectResponse
+    from ..utils.blob_storage import is_blob_url, get_blob_sas_url
+    
     # Get the resume
     resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
     
-    # Check if file exists
-    if not os.path.exists(resume.file_path):
-        raise HTTPException(status_code=404, detail="Resume file not found on server")
-    
-    # Return the file
-    return FileResponse(
-        path=resume.file_path,
-        media_type='application/pdf',
-        filename=f"{resume.title}.pdf"
-    )
+    # Check if file_path is a blob URL or local path
+    if is_blob_url(resume.file_path):
+        # Generate SAS URL and redirect
+        try:
+            sas_url = get_blob_sas_url(resume.file_path, expiry_hours=1)
+            return RedirectResponse(url=sas_url)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to generate download URL: {str(e)}"
+            )
+    else:
+        # Local file - check if exists and return
+        if not os.path.exists(resume.file_path):
+            raise HTTPException(status_code=404, detail="Resume file not found on server")
+        
+        return FileResponse(
+            path=resume.file_path,
+            media_type='application/pdf',
+            filename=f"{resume.title}.pdf"
+        )
+
