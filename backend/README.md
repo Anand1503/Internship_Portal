@@ -1,19 +1,3 @@
-# Internship Portal Backend
-
-FastAPI backend for the Internship Portal application.
-
-## Features
-
-- **Authentication**: JWT-based auth for Students and HR.
-- **Resume Management**: Upload, download, and manage resumes.
-- **Resume Analysis**: AI-powered resume scoring and feedback using Google Gemini.
-- **Internship Management**: Post and search for internships.
-- **Application Tracking**: Apply for internships and track status.
-
-## Setup
-
-1.  **Create a virtual environment**:
-    ```bash
     python -m venv venv
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
