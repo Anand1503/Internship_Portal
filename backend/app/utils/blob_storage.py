@@ -103,9 +103,17 @@ def get_blob_sas_url(blob_url: str, expiry_hours: int = 1) -> str:
         )
         
         # Extract account name and key from connection string
-        conn_parts = dict(item.split('=', 1) for item in settings.AZURE_STORAGE_CONNECTION_STRING.split(';'))
+        # Filter out empty strings from split (handles trailing semicolons)
+        conn_parts = dict(
+            item.split('=', 1) 
+            for item in settings.AZURE_STORAGE_CONNECTION_STRING.split(';')
+            if item.strip() and '=' in item
+        )
         account_name = conn_parts.get('AccountName')
         account_key = conn_parts.get('AccountKey')
+        
+        if not account_name or not account_key:
+            raise ValueError("Invalid connection string: missing AccountName or AccountKey")
         
         # Generate SAS token
         sas_token = generate_blob_sas(

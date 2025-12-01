@@ -97,12 +97,12 @@ jobs:
         with:
           inlineScript: |
             az containerapp update \
-              --name ${{ env.BACKEND_APP }} \
+              --name ${{env.BACKEND_APP }} \
               --resource-group ${{ env.RESOURCE_GROUP }} \
               --image ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }} \
               --set-env-vars \
                 "MAX_REQUEST_BODY_SIZE=10485760" \
-                "USE_AZURE_BLOB=true" \
+                "USE_AZURE_BLOB=false" \
                 "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" \
                 "AZURE_STORAGE_CONTAINER_NAME=resumes"
 
